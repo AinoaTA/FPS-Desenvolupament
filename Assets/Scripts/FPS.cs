@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
     private float m_Yaw;
     private float m_Pitch;
+
     public float m_YawRotationalSpeed = 360.0f;
     public float m_PitchRotationalSpeed = -180.0f;
     public float m_MinPitch = -80.0f;
@@ -15,12 +13,14 @@ public class FPS : MonoBehaviour
     public bool m_InvertedYaw = false;
     public bool m_InvertedPitch = true;
 
-    public GameObject PrefabParticle;
-    public LayerMask m_ShootLayerMask;
+    private Shoot ShootController;
     public Camera PCamera;
+    public GameObject PrefabParticle;
+    private CharacterController m_CharacterController;
 
-    CharacterController m_CharacterController;
     public float m_Speed = 10.0f;
+    public float m_FastSpeedMultiplier = 3f;
+    public float m_JumpSpeed = 10.0f;
     public KeyCode m_LeftKeyCode = KeyCode.A;
     public KeyCode m_RightKeyCode = KeyCode.D;
     public KeyCode m_UpKeyCode = KeyCode.W;
@@ -29,19 +29,25 @@ public class FPS : MonoBehaviour
     public KeyCode m_JumpKeyCode = KeyCode.Space;
     public KeyCode m_DebugLockAngleKeyCode = KeyCode.I;
     public KeyCode m_DebugLockKeyCode = KeyCode.O;
-    public float m_FastSpeedMultiplier = 3f;
-    public float m_JumpSpeed = 10.0f;
+
+    public bool CanShootBool = true;
+
+    private float touchingGroundValue = 0.5f;
+    private float m_VerticalSpeed = 0.0f;
+    private float touchingGround = 0.5f; //initial value
     private bool m_AngleLocked = false;
     private bool m_AimLocked = true;
-    private float m_VerticalSpeed = 0.0f;
     private bool m_OnGround = false;
-    private float touchingGround=0.5f; //initial value
-    [SerializeField] private float touchingGroundValue = 0.5f;
-
     
+    public delegate void DelegateShoot();
+    public static DelegateShoot delegateShoot;
+
+    bool CanShoot => ShootController.sMode == Shoot.ShootMode.Idle;
+
 
     void Awake()
     {
+        ShootController = GetComponent<Shoot>();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_CharacterController = GetComponent<CharacterController>();
         m_Pitch = m_PitchControllerTransform.localRotation.eulerAngles.x;
@@ -49,7 +55,7 @@ public class FPS : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked
+        Cursor.lockState = CursorLockMode.Locked;
     }
     void Update()
     {
@@ -64,34 +70,14 @@ public class FPS : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
             m_AimLocked = Cursor.lockState == CursorLockMode.Locked;
         }
-
 #endif
         PlayerCamera();
         PlayerMovement();
-
-        
-        print(touchingGround);
-
-        if(CanShoot() && Input.GetMouseButtonDown(0))
+        if(CanShoot && Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            ShootController.sMode = Shoot.ShootMode.Shooting;
+           //delegateShoot?.Invoke();
         }
-    }
-    private void Shoot()
-    {
-        Ray l_ray = PCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit l_RaycastHit;
-        if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
-        {
-            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
-        }
-    }
-
-    private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
-    {
-        GameObject instance = Instantiate(PrefabParticle, HitPos, Quaternion.identity);
-        instance.transform.rotation = Quaternion.LookRotation(Normal);
-        
     }
 
     private void PlayerCamera()
@@ -100,17 +86,11 @@ public class FPS : MonoBehaviour
         m_Pitch += l_MouseAxisY * m_PitchRotationalSpeed * Time.deltaTime * (m_InvertedPitch ? -1.0f : 1.0f);
         float l_MouseAxisX = Input.GetAxis("Mouse X");
         m_Yaw += l_MouseAxisX * m_YawRotationalSpeed * Time.deltaTime * (m_InvertedYaw ? -1.0f : 1.0f);
-        //if (m_InvertedPitch)
-        //    m_Pitch += l_PitchMovement;
-        //else
-        //    m_Pitch -= l_PitchMovement;
         m_Pitch = Mathf.Clamp(m_Pitch, m_MinPitch, m_MaxPitch);
-        //…
+
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchControllerTransform.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
-        //…
     }
-
     private void PlayerMovement()
     {
         //…
@@ -151,33 +131,13 @@ public class FPS : MonoBehaviour
             m_OnGround = false;
         if ((l_CollisionFlags & CollisionFlags.Above) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
-        //…
-        if (touchingGround>0.3f && m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
+
+        if (touchingGround>touchingGroundValue && m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
         {
             m_VerticalSpeed = m_JumpSpeed;
             touchingGround = 0f;
         }
-           
     }
 
-    bool CanShoot()
-    {
-        return true;
-    }
-    //private void PlayerGravity()
-    //{
-    //    Vector3 l_Movement = Vector3.zero;
-    //    m_VerticalSpeed += Physics.gravity.y * Time.deltaTime;
-    //    l_Movement.y = m_VerticalSpeed * Time.deltaTime;
-    //    CollisionFlags l_CollisionFlags = m_CharacterController.Move(l_Movement);
-    //    if ((l_CollisionFlags & CollisionFlags.Below) != 0)
-    //    {
-    //        m_OnGround = true;
-    //        m_VerticalSpeed = 0.0f;
-    //    }
-    //    else
-    //        m_OnGround = false;
-    //    if ((l_CollisionFlags & CollisionFlags.Above) != 0 && m_VerticalSpeed > 0.0f)
-    //        m_VerticalSpeed = 0.0f;
-    //}
+    
 }

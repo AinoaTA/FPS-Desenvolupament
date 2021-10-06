@@ -15,9 +15,6 @@ public class ShooterPoints : MonoBehaviour
             delegateGate?.Invoke();
         if (Input.GetKeyDown(KeyCode.T))
             points += 2;
-
-
-        print(points);
     }
 }
 
