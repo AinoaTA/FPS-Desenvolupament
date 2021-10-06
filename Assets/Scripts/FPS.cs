@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
-    float m_Yaw;
-    float m_Pitch;
+    private float m_Yaw;
+    private float m_Pitch;
     public float m_YawRotationalSpeed = 360.0f;
     public float m_PitchRotationalSpeed = -180.0f;
     public float m_MinPitch = -80.0f;
@@ -14,6 +14,10 @@ public class FPS : MonoBehaviour
     public Transform m_PitchControllerTransform;
     public bool m_InvertedYaw = false;
     public bool m_InvertedPitch = true;
+
+    public GameObject PrefabParticle;
+    public LayerMask m_ShootLayerMask;
+    public Camera PCamera;
 
     CharacterController m_CharacterController;
     public float m_Speed = 10.0f;
@@ -23,12 +27,18 @@ public class FPS : MonoBehaviour
     public KeyCode m_DownKeyCode = KeyCode.S; 
     public KeyCode m_RunKeyCode = KeyCode.J;
     public KeyCode m_JumpKeyCode = KeyCode.Space;
-    public float m_FastSpeedMultiplier = 1.2f;
+    public KeyCode m_DebugLockAngleKeyCode = KeyCode.I;
+    public KeyCode m_DebugLockKeyCode = KeyCode.O;
+    public float m_FastSpeedMultiplier = 3f;
     public float m_JumpSpeed = 10.0f;
+    private bool m_AngleLocked = false;
+    private bool m_AimLocked = true;
+    private float m_VerticalSpeed = 0.0f;
+    private bool m_OnGround = false;
+    private float touchingGround=0.5f; //initial value
+    [SerializeField] private float touchingGroundValue = 0.5f;
 
-    float m_VerticalSpeed = 0.0f;
-
-    bool m_OnGround = false;
+    
 
     void Awake()
     {
@@ -36,12 +46,52 @@ public class FPS : MonoBehaviour
         m_CharacterController = GetComponent<CharacterController>();
         m_Pitch = m_PitchControllerTransform.localRotation.eulerAngles.x;
     }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked
+    }
     void Update()
     {
-        //…
+# if UNITY_EDITOR
+        if (Input.GetKeyDown(m_DebugLockAngleKeyCode))
+            m_AngleLocked = !m_AngleLocked;
+        if (Input.GetKeyDown(m_DebugLockKeyCode))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+                Cursor.lockState = CursorLockMode.None;
+            else
+                Cursor.lockState = CursorLockMode.Locked;
+            m_AimLocked = Cursor.lockState == CursorLockMode.Locked;
+        }
+
+#endif
         PlayerCamera();
         PlayerMovement();
-        //PlayerGravity();
+
+        
+        print(touchingGround);
+
+        if(CanShoot() && Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
+    }
+    private void Shoot()
+    {
+        Ray l_ray = PCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit l_RaycastHit;
+        if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
+        {
+            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
+        }
+    }
+
+    private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
+    {
+        GameObject instance = Instantiate(PrefabParticle, HitPos, Quaternion.identity);
+        instance.transform.rotation = Quaternion.LookRotation(Normal);
+        
     }
 
     private void PlayerCamera()
@@ -93,6 +143,7 @@ public class FPS : MonoBehaviour
         CollisionFlags l_CollisionFlags = m_CharacterController.Move(l_Movement);
         if ((l_CollisionFlags & CollisionFlags.Below) != 0)
         {
+            touchingGround += Time.deltaTime;
             m_OnGround = true;
             m_VerticalSpeed = 0.0f;
         }
@@ -101,8 +152,17 @@ public class FPS : MonoBehaviour
         if ((l_CollisionFlags & CollisionFlags.Above) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
         //…
-        if (m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
+        if (touchingGround>0.3f && m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
+        {
             m_VerticalSpeed = m_JumpSpeed;
+            touchingGround = 0f;
+        }
+           
+    }
+
+    bool CanShoot()
+    {
+        return true;
     }
     //private void PlayerGravity()
     //{
