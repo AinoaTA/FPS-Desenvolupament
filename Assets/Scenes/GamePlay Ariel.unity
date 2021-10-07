@@ -12170,8 +12170,8 @@ Animation:
   m_Animation: {fileID: 7400000, guid: fb0d8cf89f07bb4489d2efce0801ec85, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5af857dc73a5f874babedb32d0c3dfdb, type: 2}
-  - {fileID: 7400000, guid: fb0d8cf89f07bb4489d2efce0801ec85, type: 2}
   - {fileID: 7400000, guid: 92d958b0be9e1ca4190234816bd1262c, type: 2}
+  - {fileID: 7400000, guid: fb0d8cf89f07bb4489d2efce0801ec85, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -12421,24 +12421,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1988231493401169892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2983526243070909249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c4752388265efd4eb5f40b71870012b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PCamera: {fileID: 2983526244214430497}
-  BulletPrefab: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
-  m_ShootLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  ShootGun: {fileID: 6688069299553956683}
 --- !u!1 &2983526243070909249
 GameObject:
   m_ObjectHideFlags: 0
@@ -12450,7 +12432,6 @@ GameObject:
   - component: {fileID: 2983526243070909254}
   - component: {fileID: 2983526243070909255}
   - component: {fileID: 6413600309770693966}
-  - component: {fileID: 1988231493401169892}
   - component: {fileID: 2983526243070909250}
   m_Layer: 0
   m_Name: Player-FPS
@@ -12504,13 +12485,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcec1ab9011a13f4aac17a761f6cdcce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PitchControllerTransform: {fileID: 2983526244496270666}
   m_YawRotationalSpeed: 360
   m_PitchRotationalSpeed: 180
   m_MinPitch: -80
   m_MaxPitch: 50
-  m_PitchControllerTransform: {fileID: 2983526244496270666}
   m_InvertedYaw: 0
   m_InvertedPitch: 1
+  ShootGun: {fileID: 6688069299553956683}
   PCamera: {fileID: 2983526244214430497}
   PrefabParticle: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
   m_Speed: 10
@@ -98900,6 +98882,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3f286d0fd2d9145b2237a2354a61d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentBullets: 4
+  PCamera: {fileID: 2983526244214430497}
+  BulletPrefab: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
+  m_ShootLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &7608078428265580590
 GameObject:
   m_ObjectHideFlags: 0

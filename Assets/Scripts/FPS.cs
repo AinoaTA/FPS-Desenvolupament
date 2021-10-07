@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FPS : MonoBehaviour
@@ -5,15 +6,15 @@ public class FPS : MonoBehaviour
     private float m_Yaw;
     private float m_Pitch;
 
+    public Transform m_PitchControllerTransform;
     public float m_YawRotationalSpeed = 360.0f;
     public float m_PitchRotationalSpeed = -180.0f;
     public float m_MinPitch = -80.0f;
     public float m_MaxPitch = 50.0f;
-    public Transform m_PitchControllerTransform;
     public bool m_InvertedYaw = false;
     public bool m_InvertedPitch = true;
 
-    private Shoot ShootController;
+    public ShootGun ShootGun;
     public Camera PCamera;
     public GameObject PrefabParticle;
     private CharacterController m_CharacterController;
@@ -45,13 +46,11 @@ public class FPS : MonoBehaviour
     public static DelegateShoot delegateShoot;
     
     bool CanShoot => PlayerState.PlayerStateMode == PlayerState.PlayerMode.Idle;
-
-
+    bool isChargerEmpty => ShootGun.CurrentBullets == 0;
+    
     void Awake()
-
     {
         playerState = GetComponent<PlayerState>();
-        ShootController = GetComponent<Shoot>();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_CharacterController = GetComponent<CharacterController>();
         m_Pitch = m_PitchControllerTransform.localRotation.eulerAngles.x;
@@ -75,16 +74,16 @@ public class FPS : MonoBehaviour
             m_AimLocked = Cursor.lockState == CursorLockMode.Locked;
         }
 #endif
-        PlayerCamera();
-        PlayerMovement();
-
         if (CanShoot)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !isChargerEmpty)
                 playerState.UpdateShoot(PlayerState.PlayerMode.Shooting);
             if (Input.GetKeyDown(KeyCode.R))
                 playerState.UpdateShoot(PlayerState.PlayerMode.Charging);
         }
+
+        PlayerCamera();
+        PlayerMovement();
     }
     private void PlayerCamera()
     {
@@ -99,7 +98,6 @@ public class FPS : MonoBehaviour
     }
     private void PlayerMovement()
     {
-        //…
         float l_YawInRadians = m_Yaw * Mathf.Deg2Rad;
         float l_Yaw90InRadians = (m_Yaw + 90.0f) * Mathf.Deg2Rad;
         Vector3 l_Forward = new Vector3(Mathf.Sin(l_YawInRadians), 0.0f, Mathf.Cos(l_YawInRadians));
@@ -125,8 +123,12 @@ public class FPS : MonoBehaviour
         l_Movement.y = m_VerticalSpeed * Time.deltaTime;
         m_VerticalSpeed += Physics.gravity.y * Time.deltaTime;
 
-        //gravity
-        CollisionFlags l_CollisionFlags = m_CharacterController.Move(l_Movement);
+        Gravity(l_Movement);
+    }
+
+    private void Gravity(Vector3 movement)
+    {
+        CollisionFlags l_CollisionFlags = m_CharacterController.Move(movement);
         if ((l_CollisionFlags & CollisionFlags.Below) != 0)
         {
             touchingGround += Time.deltaTime;
@@ -144,6 +146,4 @@ public class FPS : MonoBehaviour
             touchingGround = 0f;
         }
     }
-
-
 }

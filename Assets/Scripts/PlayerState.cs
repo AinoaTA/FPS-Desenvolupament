@@ -28,7 +28,7 @@ public class PlayerState : MonoBehaviour
 
     private void Start()
     {
-        PlayerStateMode = PlayerMode.Idle; 
+        UpdateShoot(PlayerMode.Idle);
     }
     public void UpdateShoot(PlayerMode nextMode)
     {
