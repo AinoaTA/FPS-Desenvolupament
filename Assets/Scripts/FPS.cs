@@ -24,7 +24,7 @@ public class FPS : MonoBehaviour
     public KeyCode m_LeftKeyCode = KeyCode.A;
     public KeyCode m_RightKeyCode = KeyCode.D;
     public KeyCode m_UpKeyCode = KeyCode.W;
-    public KeyCode m_DownKeyCode = KeyCode.S; 
+    public KeyCode m_DownKeyCode = KeyCode.S;
     public KeyCode m_RunKeyCode = KeyCode.J;
     public KeyCode m_JumpKeyCode = KeyCode.Space;
     public KeyCode m_DebugLockAngleKeyCode = KeyCode.I;
@@ -38,15 +38,19 @@ public class FPS : MonoBehaviour
     private bool m_AngleLocked = false;
     private bool m_AimLocked = true;
     private bool m_OnGround = false;
-    
+
+    private PlayerState playerState;
+
     public delegate void DelegateShoot();
     public static DelegateShoot delegateShoot;
-
-    bool CanShoot => ShootController.sMode == Shoot.ShootMode.Idle;
+    
+    bool CanShoot => PlayerState.PlayerStateMode == PlayerState.PlayerMode.Idle;
 
 
     void Awake()
+
     {
+        playerState = GetComponent<PlayerState>();
         ShootController = GetComponent<Shoot>();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_CharacterController = GetComponent<CharacterController>();
@@ -73,13 +77,15 @@ public class FPS : MonoBehaviour
 #endif
         PlayerCamera();
         PlayerMovement();
-        if(CanShoot && Input.GetMouseButtonDown(0))
+
+        if (CanShoot)
         {
-            ShootController.sMode = Shoot.ShootMode.Shooting;
-           //delegateShoot?.Invoke();
+            if (Input.GetMouseButtonDown(0))
+                playerState.UpdateShoot(PlayerState.PlayerMode.Shooting);
+            if (Input.GetKeyDown(KeyCode.R))
+                playerState.UpdateShoot(PlayerState.PlayerMode.Charging);
         }
     }
-
     private void PlayerCamera()
     {
         float l_MouseAxisY = Input.GetAxis("Mouse Y");
@@ -132,12 +138,12 @@ public class FPS : MonoBehaviour
         if ((l_CollisionFlags & CollisionFlags.Above) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
 
-        if (touchingGround>touchingGroundValue && m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
+        if (touchingGround > touchingGroundValue && m_OnGround && Input.GetKeyDown(m_JumpKeyCode))
         {
             m_VerticalSpeed = m_JumpSpeed;
             touchingGround = 0f;
         }
     }
 
-    
+
 }
