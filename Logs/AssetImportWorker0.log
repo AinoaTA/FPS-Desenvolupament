@@ -15,11 +15,19 @@ E:/Proyecto Desenvolupament/FPS-Desenvolupament
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
+<<<<<<< Updated upstream
 59044
 Successfully changed project path to: E:/Proyecto Desenvolupament/FPS-Desenvolupament
 E:/Proyecto Desenvolupament/FPS-Desenvolupament
 Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 32.14 ms, found 0 plugins.
+=======
+63473
+Successfully changed project path to: D:/Tercero/PrimerTrimestre/Desenvolupament
+D:/Tercero/PrimerTrimestre/Desenvolupament
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 166.41 ms, found 0 plugins.
+>>>>>>> Stashed changes
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.7f1 (c53830e277f1)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Resources/UnitySubsystems
@@ -35,6 +43,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< Updated upstream
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56796
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -42,11 +51,21 @@ Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.7f1/E
 Registered in 0.001496 seconds.
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 31.55 ms, found 0 plugins.
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56064
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005211 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 122.31 ms, found 0 plugins.
+>>>>>>> Stashed changes
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
+<<<<<<< Updated upstream
 - Completed reload, in  0.806 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
@@ -54,11 +73,21 @@ Registered in 0.000811 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.31 ms, found 0 plugins.
+=======
+- Completed reload, in  3.093 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.003977 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 179.58 ms, found 0 plugins.
+>>>>>>> Stashed changes
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
+<<<<<<< Updated upstream
 - Completed reload, in  0.680 seconds
 Platform modules already initialized, skipping
 ========================================================================
@@ -957,5 +986,68 @@ System memory in use after: 104.1 MB.
 
 Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1749.
 Total: 1.743100 ms (FindLiveObjects: 0.136500 ms CreateObjectMapping: 0.022400 ms MarkObjects: 1.465700 ms  DeleteObjects: 0.116600 ms)
+=======
+- Completed reload, in  4.322 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.12 seconds
+Refreshing native plugins compatible for Editor in 1.16 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2557 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 172.5 MB.
+System memory in use after: 172.7 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 3042.
+Total: 4.406300 ms (FindLiveObjects: 0.388300 ms CreateObjectMapping: 0.174100 ms MarkObjects: 3.457200 ms  DeleteObjects: 0.385000 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Brushes/NewBrush 1.brush
+  artifactKey: Guid(cdc9a8982d6b7e843bdf401ffee94597) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Brushes/NewBrush 1.brush using Guid(cdc9a8982d6b7e843bdf401ffee94597) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '228f51d84314fa54fc35bcb10cc7387d') in 0.217123 seconds
+  Import took 0.281847 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000575 seconds.
+  path: Assets/Brushes/NewLayer.terrainlayer
+  artifactKey: Guid(c43c15fa5f9260c4598be683ce72767b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Brushes/NewLayer.terrainlayer using Guid(c43c15fa5f9260c4598be683ce72767b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e1400423a4af2005ff8d3a13a2d36bb') in 0.228082 seconds
+  Import took 0.252646 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000550 seconds.
+  path: Assets/Brushes/NewBrush.brush
+  artifactKey: Guid(6d2918380876adb45a46f40c2b32b053) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Brushes/NewBrush.brush using Guid(6d2918380876adb45a46f40c2b32b053) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49dfa04f25841f43b441bc2ff4ba32a6') in 0.011983 seconds
+  Import took 0.025965 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.821916 seconds.
+  path: Assets/Starfield Skybox/Demo
+  artifactKey: Guid(7a4470ba344bcbb44bb67e3c01170b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo using Guid(7a4470ba344bcbb44bb67e3c01170b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39b57b4bc03974955ca46b5717734fde') in 0.001737 seconds
+  Import took 0.009524 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 163.503773 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Decoration/Sculptures
+  artifactKey: Guid(4bd38e80f1932134a9411b1d3b0fb6df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Decoration/Sculptures using Guid(4bd38e80f1932134a9411b1d3b0fb6df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce0d428f516271c128dc938c7fde1d8d') in 0.094426 seconds
+  Import took 0.118456 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 52.676143 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Walls/Version A - Stone/dfk_wall_01a.prefab
+  artifactKey: Guid(41849f19442adff4a951d0ff9430516c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Walls/Version A - Stone/dfk_wall_01a.prefab using Guid(41849f19442adff4a951d0ff9430516c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1de3a5556de02634b97ebc35e9f3de1b') in 0.183164 seconds
+  Import took 0.217707 seconds .
+>>>>>>> Stashed changes
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
