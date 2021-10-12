@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class ShootGun : MonoBehaviour, IGun
 {
-    private float maxBulletSaved = 100f;
-    private float bulletForCharger = 50f;
-    public float currentBullets = 5f;
+    private float maxBulletSaved = 10f;
+    private float bulletForCharger = 5f;
+    private float currentBullets = 5f;
+
+    private float timerRaycast=0f;
+    private float maxTimerRaycast = 2f;
 
     public Camera PCamera;
     public GameObject BulletPrefab;
@@ -40,17 +43,30 @@ public class ShootGun : MonoBehaviour, IGun
         UpdateTextUI();
     }
 
+    private void Update()
+    {
+        if(PlayerState.PlayerStateMode== PlayerState.PlayerMode.Shooting)
+         timerRaycast += Time.deltaTime;
+
+        if (timerRaycast >= maxTimerRaycast)
+        {
+            timerRaycast = 0f;
+            playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
+        }
+    }
     //SHOOTING
     public void Shooting()
     {
+        bool ray = false;
         Ray l_ray = PCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit l_RaycastHit;
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
             CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
             UpdateBullets();
-            print(PlayerState.PlayerStateMode);
+
             StartCoroutine(ShootingDelay());
+
         }
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
@@ -58,7 +74,7 @@ public class ShootGun : MonoBehaviour, IGun
         GameObject bullet = Instantiate(BulletPrefab, HitPos, Quaternion.identity);
         bullet.transform.rotation = Quaternion.LookRotation(Normal);
 
-        Bullet b = new Bullet(transform, Normal, 10f);
+       // Bullet b = new Bullet(transform, Normal, 10f);
     }
     private IEnumerator ShootingDelay()
     {
@@ -73,11 +89,34 @@ public class ShootGun : MonoBehaviour, IGun
     {
         if (maxBulletSaved > 0)
         {
-            maxBulletSaved -= (bulletForCharger-currentBullets);
-            if (maxBulletSaved <= 0)
+            //si sigue habiendo más balas q las que puede tener cargadas
+            if(maxBulletSaved >= bulletForCharger)
+            {
+                maxBulletSaved -= (bulletForCharger - currentBullets);
+                currentBullets = bulletForCharger;
+            } 
+            else if(currentBullets<bulletForCharger)
+            {
+                float total = currentBullets + maxBulletSaved;
+                print("total: " + total);
+                float toCharge = total - bulletForCharger;
+
+                currentBullets += Mathf.Abs(toCharge);
+                maxBulletSaved -= Mathf.Abs(toCharge);
+
+                if (total == bulletForCharger)
+                {
+                    currentBullets = bulletForCharger;
+                    maxBulletSaved = 0;
+                }
+                    
+
+
+            }
+
+            if (maxBulletSaved < 0)
                 maxBulletSaved = 0;
 
-            currentBullets = bulletForCharger;
             UpdateTextUI();
             StartCoroutine(ChargingDelay());
         }
@@ -89,9 +128,9 @@ public class ShootGun : MonoBehaviour, IGun
     }
     public void Idle()
     {
-       
+
     }
-  
+
     //UPDATE TEXT AND BULLETS
     public void UpdateBullets()
     {
