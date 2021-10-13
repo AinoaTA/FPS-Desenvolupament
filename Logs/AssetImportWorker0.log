@@ -289,3 +289,4 @@ Received Import Request.
 Start importing Assets/Scripts/Shoot/ShootGun.cs using Guid(4a3f286d0fd2d9145b2237a2354a61d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1d1cbe0b7f9654b7a2d56b6e9b7843b2') in 0.007404 seconds
   Import took 0.011168 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
