@@ -11,12 +11,12 @@ public class UICharger : MonoBehaviour
     }
     private void OnEnable()
     {
-        ShootGun.delegateUI += UpdateText;
+        Shoot.delegateUI += UpdateText;
     }
 
     private void OnDisable()
     {
-        ShootGun.delegateUI -= UpdateText;
+        Shoot.delegateUI -= UpdateText;
     }
 
     private void UpdateText(string bulletText)

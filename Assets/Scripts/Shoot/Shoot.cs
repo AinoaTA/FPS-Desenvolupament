@@ -1,16 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class ShootGun : MonoBehaviour
+public class Shoot : MonoBehaviour
 {
-    public Gun currentGun;
+    public Gun CurrentGun;
+    public FPS Player;
 
-    //private int maxBulletSaved => 10;
-    //private int bulletForCharger = 5;
-    //private int currentBullets = 5;
+    private int maxBulletSaved;
+    private int bulletForCharger;
+    public int CurrentBullets;
 
-    //private float timerRaycast=0f;
-    //private float maxTimerRaycast = 2f;
 
     public Camera PCamera;
     public GameObject BulletPrefab;
@@ -21,6 +20,7 @@ public class ShootGun : MonoBehaviour
 
     public delegate void DelegateUI(string text);
     public static DelegateUI delegateUI;
+
 
     private void OnEnable()
     {
@@ -40,21 +40,12 @@ public class ShootGun : MonoBehaviour
     }
     private void Start()
     {
+        CurrentBullets = CurrentGun.currentBullets;
+        maxBulletSaved = CurrentGun.maxBulletSaved;
+        bulletForCharger = CurrentGun.bulletForCharger;
         UpdateTextUI();
+
     }
-
-    private void Update()
-    {
-        //if(PlayerState.PlayerStateMode== PlayerState.PlayerMode.Shooting)
-        // timerRaycast += Time.deltaTime;
-
-        //if (timerRaycast >= maxTimerRaycast)
-        //{
-        //    timerRaycast = 0f;
-        //    playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
-        //}
-    }
-
     //**********************************************************
     //**********************************************************
     //**********************************************************
@@ -71,8 +62,26 @@ public class ShootGun : MonoBehaviour
             CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
             UpdateBullets();
 
+            DispersionEffect();
             StartCoroutine(ShootingDelay());
         }
+        else { playerState.UpdateShoot(PlayerState.PlayerMode.Idle); }
+    }
+
+    private void DispersionEffect()
+    {
+        bool dispersion = true;
+        if (dispersion)
+        {
+            Player.DispersionPitch = CurrentGun.upDispersion;
+
+            StartCoroutine(DispersionDelay());
+        }
+    }
+    private IEnumerator DispersionDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Player.DispersionPitch = 0;
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
     {
@@ -84,9 +93,9 @@ public class ShootGun : MonoBehaviour
     private IEnumerator ShootingDelay()
     {
         yield return new WaitForSeconds(0.2f);
+        print("no updateo");
         playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
     }
-
     //**********************************************************
     //**********************************************************
     //**********************************************************
@@ -94,36 +103,32 @@ public class ShootGun : MonoBehaviour
     //**********************************************************
     //**********************************************************
     //**********************************************************
-
     public void Charging()
     {
-        if (currentGun.maxBulletSaved > 0)
+        if (maxBulletSaved > 0)
         {
             //si sigue habiendo más balas q las que puede tener cargadas
-            if(currentGun.maxBulletSaved > currentGun.bulletForCharger)
+            if(maxBulletSaved > bulletForCharger)
             {
-                currentGun.maxBulletSaved -= (currentGun.bulletForCharger - currentGun.currentBullets);
-                currentGun.currentBullets = currentGun.bulletForCharger;
+                maxBulletSaved -= (bulletForCharger - CurrentBullets);
+                CurrentBullets = bulletForCharger;
             } 
-            else if (currentGun.maxBulletSaved <= currentGun.bulletForCharger)
+            else if (maxBulletSaved <= bulletForCharger)
             {
-                int total = currentGun.bulletForCharger - currentGun.currentBullets;
-                // total = 5-3 = 2
-                // total = 5-1 = 4 pero si tenemos solo 3 en el cargador
+                int total = bulletForCharger -CurrentBullets;
 
-                if (currentGun.maxBulletSaved > total)
-                    currentGun.maxBulletSaved -= total;
-                else if (currentGun.maxBulletSaved <= total)
+                if (maxBulletSaved > total)
+                    maxBulletSaved -= total;
+                else if (maxBulletSaved <= total)
                 {
                     int t = total;
-                    total = currentGun.maxBulletSaved;
-                    currentGun.maxBulletSaved -= t;
+                    total = maxBulletSaved;
+                    maxBulletSaved -= t;
                 }
-                currentGun.currentBullets += total;
+                CurrentBullets += total;
             }
-
-            if (currentGun.maxBulletSaved < 0)
-                currentGun.maxBulletSaved = 0;            
+            if (maxBulletSaved < 0)
+                maxBulletSaved = 0;            
         }
         UpdateTextUI();
         StartCoroutine(ChargingDelay());
@@ -133,18 +138,16 @@ public class ShootGun : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
     }
-    public void Idle() {}
-
     //**********************************************************
     //UPDATE TEXT AND BULLETS
     //**********************************************************
     public void UpdateBullets()
     {
-        currentGun.currentBullets -= 1;
+        CurrentBullets -= 1;
         UpdateTextUI();
     }
     private void UpdateTextUI()
     {
-        delegateUI?.Invoke(currentGun.currentBullets.ToString() + " / " + currentGun.maxBulletSaved.ToString());
+        delegateUI?.Invoke(CurrentBullets.ToString() + " / " + maxBulletSaved.ToString());
     }
 }
