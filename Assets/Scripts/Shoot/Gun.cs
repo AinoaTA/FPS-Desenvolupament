@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class Gun : ScriptableObject
 {
-    public float maxBulletSaved = 10f;
-    public float bulletForCharger = 5f;
-    public float currentBullets = 5f;
+    public int maxBulletSaved = 10;
+    public int bulletForCharger = 5;
+    public int currentBullets = 5;
 
 }

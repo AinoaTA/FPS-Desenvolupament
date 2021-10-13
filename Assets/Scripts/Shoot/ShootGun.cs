@@ -4,9 +4,10 @@ using UnityEngine;
 public class ShootGun : MonoBehaviour
 {
     public Gun currentGun;
-    private int maxBulletSaved = 10;
-    private int bulletForCharger = 5;
-    private int currentBullets = 5;
+
+    //private int maxBulletSaved => 10;
+    //private int bulletForCharger = 5;
+    //private int currentBullets = 5;
 
     //private float timerRaycast=0f;
     //private float maxTimerRaycast = 2f;
@@ -20,8 +21,6 @@ public class ShootGun : MonoBehaviour
 
     public delegate void DelegateUI(string text);
     public static DelegateUI delegateUI;
-
-    public float CurrentBullets => currentBullets;
 
     private void OnEnable()
     {
@@ -98,31 +97,34 @@ public class ShootGun : MonoBehaviour
 
     public void Charging()
     {
-        if (maxBulletSaved > 0)
+        if (currentGun.maxBulletSaved > 0)
         {
-            
             //si sigue habiendo más balas q las que puede tener cargadas
-            if(maxBulletSaved > bulletForCharger)
+            if(currentGun.maxBulletSaved > currentGun.bulletForCharger)
             {
-                maxBulletSaved -= (bulletForCharger - currentBullets);
-                currentBullets = bulletForCharger;
+                currentGun.maxBulletSaved -= (currentGun.bulletForCharger - currentGun.currentBullets);
+                currentGun.currentBullets = currentGun.bulletForCharger;
             } 
-            else if (maxBulletSaved <= bulletForCharger)
+            else if (currentGun.maxBulletSaved <= currentGun.bulletForCharger)
             {
-                int total = bulletForCharger - currentBullets;
+                int total = currentGun.bulletForCharger - currentGun.currentBullets;
                 // total = 5-3 = 2
-                if (maxBulletSaved != 0)
-                     maxBulletSaved -= total;
+                // total = 5-1 = 4 pero si tenemos solo 3 en el cargador
 
-                currentBullets += total;
+                if (currentGun.maxBulletSaved > total)
+                    currentGun.maxBulletSaved -= total;
+                else if (currentGun.maxBulletSaved <= total)
+                {
+                    int t = total;
+                    total = currentGun.maxBulletSaved;
+                    currentGun.maxBulletSaved -= t;
+                }
+                currentGun.currentBullets += total;
             }
 
-            if (maxBulletSaved < 0)
-                maxBulletSaved = 0;
-
-            
+            if (currentGun.maxBulletSaved < 0)
+                currentGun.maxBulletSaved = 0;            
         }
-
         UpdateTextUI();
         StartCoroutine(ChargingDelay());
     }
@@ -138,11 +140,11 @@ public class ShootGun : MonoBehaviour
     //**********************************************************
     public void UpdateBullets()
     {
-        currentBullets -= 1;
+        currentGun.currentBullets -= 1;
         UpdateTextUI();
     }
     private void UpdateTextUI()
     {
-        delegateUI?.Invoke(currentBullets.ToString() + " / " + maxBulletSaved.ToString());
+        delegateUI?.Invoke(currentGun.currentBullets.ToString() + " / " + currentGun.maxBulletSaved.ToString());
     }
 }
