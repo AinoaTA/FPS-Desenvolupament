@@ -10,6 +10,10 @@ public class PlayerState : MonoBehaviour
 
     public delegate void ChargingDelegate();
     public event ChargingDelegate chargingDelegate;
+    private void Update()
+    {
+        print(PlayerStateMode);
+    }
     public enum PlayerMode
     {
         Idle,
@@ -18,12 +22,6 @@ public class PlayerState : MonoBehaviour
     }
 
     public static PlayerMode PlayerStateMode;
-
-    private void Update()
-    {
-        print(PlayerStateMode);
-    }
-
     private void Start()
     {
         UpdateShoot(PlayerMode.Idle);
@@ -42,6 +40,7 @@ public class PlayerState : MonoBehaviour
                 Anim.CrossFade("Shooting", 0f);
                 shootDelegate?.Invoke();
                 break;
+
             case PlayerMode.Charging:
                 Anim.CrossFade("Charging", 0f);
                 chargingDelegate?.Invoke();

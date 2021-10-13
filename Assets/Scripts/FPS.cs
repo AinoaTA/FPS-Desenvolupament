@@ -35,8 +35,6 @@ public class FPS : MonoBehaviour
     private float touchingGroundValue = 0.5f;
     private float m_VerticalSpeed = 0.0f;
     private float touchingGround = 0.5f; //initial value
-    private bool m_AngleLocked = false;
-    private bool m_AimLocked = true;
     private bool m_OnGround = false;
 
     private PlayerState playerState;
@@ -61,18 +59,6 @@ public class FPS : MonoBehaviour
     }
     void Update()
     {
-# if UNITY_EDITOR
-        if (Input.GetKeyDown(m_DebugLockAngleKeyCode))
-            m_AngleLocked = !m_AngleLocked;
-        if (Input.GetKeyDown(m_DebugLockKeyCode))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-            m_AimLocked = Cursor.lockState == CursorLockMode.Locked;
-        }
-#endif
         if (CanShoot)
         {
             if (Input.GetMouseButtonDown(0) && !isChargerEmpty)
