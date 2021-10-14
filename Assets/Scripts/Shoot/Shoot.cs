@@ -73,7 +73,7 @@ public class Shoot : MonoBehaviour
         bool dispersion = true;
         if (dispersion)
         {
-            Player.DispersionPitch = CurrentGun.upDispersion;
+            Player.Recoil = CurrentGun.upDispersion;
 
             StartCoroutine(DispersionDelay());
         }
@@ -81,7 +81,7 @@ public class Shoot : MonoBehaviour
     private IEnumerator DispersionDelay()
     {
         yield return new WaitForSeconds(0.1f);
-        Player.DispersionPitch = 0;
+        Player.Recoil = 0;
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
     {
@@ -149,5 +149,12 @@ public class Shoot : MonoBehaviour
     private void UpdateTextUI()
     {
         delegateUI?.Invoke(CurrentBullets.ToString() + " / " + maxBulletSaved.ToString());
+    }
+
+    public void AddAmmo(int value)
+    {
+
+        maxBulletSaved += value;
+        UpdateTextUI();
     }
 }
