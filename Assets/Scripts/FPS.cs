@@ -5,7 +5,7 @@ public class FPS : MonoBehaviour
     private float m_Yaw;
     private float m_Pitch;
 
-    public float DispersionPitch=0;
+    public float Recoil=0;
     public Transform m_PitchControllerTransform;
     public float m_YawRotationalSpeed = 360.0f;
     public float m_PitchRotationalSpeed = -180.0f;
@@ -32,11 +32,14 @@ public class FPS : MonoBehaviour
     public KeyCode m_DebugLockKeyCode = KeyCode.O;
 
     public bool CanShootBool = true;
+    public GameController m_GameController;
 
     private float touchingGroundValue = 0.5f;
     private float m_VerticalSpeed = 0.0f;
     private float touchingGround = 0.5f; //initial value
     private bool m_OnGround = false;
+
+    public int m_life = 100;
 
     private PlayerState playerState;
 
@@ -58,6 +61,7 @@ public class FPS : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        GameController.GetGameController().SetPlayer(this);
     }
     void Update()
     {
@@ -75,7 +79,7 @@ public class FPS : MonoBehaviour
     private void PlayerCamera()
     {
         float l_MouseAxisY = Input.GetAxis("Mouse Y");
-        m_Pitch += (DispersionPitch+l_MouseAxisY) * m_PitchRotationalSpeed * Time.deltaTime * (m_InvertedPitch ? -1.0f : 1.0f);
+        m_Pitch += (Recoil+l_MouseAxisY) * m_PitchRotationalSpeed * Time.deltaTime * (m_InvertedPitch ? -1.0f : 1.0f);
         float l_MouseAxisX = Input.GetAxis("Mouse X");
         m_Yaw += l_MouseAxisX * m_YawRotationalSpeed * Time.deltaTime * (m_InvertedYaw ? -1.0f : 1.0f);
         m_Pitch = Mathf.Clamp(m_Pitch, m_MinPitch, m_MaxPitch);
@@ -135,5 +139,25 @@ public class FPS : MonoBehaviour
             m_VerticalSpeed = m_JumpSpeed;
             touchingGround = 0f;
         }
+    }
+
+    //private void a()
+    //{
+    //    GameController.GetGameController();
+    //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            Items l_Item = other.GetComponent<Items>();
+            if (l_Item.CanPick())
+                l_Item.Pick();
+        }
+    }
+
+    public void AddLife(int amount)
+    {
+        m_life += amount;
     }
 }
