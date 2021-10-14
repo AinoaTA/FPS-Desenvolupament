@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2020.2/staging' branch; Version is '2020.2.7f1 (c53830e277f1) revision 12924976'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Home; OS build 19043.1237; Version 2009; 64bit' Language: 'es' Physical Memory: 16061 MB
+OS: 'Windows 10 Home; OS build 19042.867; Version 2009; 64bit' Language: 'es' Physical Memory: 16224 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
@@ -11,81 +11,314 @@ C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Unity.exe
 -name
 AssetImportWorker0
 -projectPath
-E:/Proyecto Desenvolupament/FPS-Desenvolupament
+D:/Tercero/PrimerTrimestre/Desenvolupament
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-58659
-Successfully changed project path to: E:/Proyecto Desenvolupament/FPS-Desenvolupament
-E:/Proyecto Desenvolupament/FPS-Desenvolupament
+50810
+Successfully changed project path to: D:/Tercero/PrimerTrimestre/Desenvolupament
+D:/Tercero/PrimerTrimestre/Desenvolupament
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 28.49 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 61.89 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.2.7f1 (c53830e277f1)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path E:/Proyecto Desenvolupament/FPS-Desenvolupament/Assets
+[Subsystems] Discovering subsystems at path D:/Tercero/PrimerTrimestre/Desenvolupament/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce RTX 3060 Laptop GPU (ID=0x2520)
+    Renderer: NVIDIA GeForce RTX 2070 (ID=0x1f10)
     Vendor:   
-    VRAM:     6023 MB
-    Driver:   27.21.14.6235
+    VRAM:     8031 MB
+    Driver:   25.21.14.1749
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56124
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56084
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001213 seconds.
+Registered in 0.001875 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 26.98 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 59.31 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.702 seconds
+- Completed reload, in  1.016 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000515 seconds.
+Registered in 0.001402 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.35 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 61.28 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.571 seconds
+- Completed reload, in  1.459 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 0.35 ms, found 0 plugins.
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1179 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 102.5 MB.
-System memory in use after: 102.6 MB.
+Unloading 2557 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 173.0 MB.
+System memory in use after: 173.2 MB.
 
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1658.
-Total: 1.459500 ms (FindLiveObjects: 0.127700 ms CreateObjectMapping: 0.030300 ms MarkObjects: 1.133500 ms  DeleteObjects: 0.166900 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Prefabs/Scenario.prefab
-  artifactKey: Guid(7e4a574dc3bf9c948b10e063e5aae53b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Scenario.prefab using Guid(7e4a574dc3bf9c948b10e063e5aae53b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a990de47fa8f921c7c7893a86a290947') in 1.190264 seconds
-  Import took 1.279191 seconds .
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 3042.
+Total: 2.937900 ms (FindLiveObjects: 0.313000 ms CreateObjectMapping: 0.213500 ms MarkObjects: 2.278500 ms  DeleteObjects: 0.131700 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000188 seconds.
-  path: Assets/Prefabs/Player 1.prefab
-  artifactKey: Guid(c176bce75ce2d6a4f8fb1b14dcc19b77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Player 1.prefab using Guid(c176bce75ce2d6a4f8fb1b14dcc19b77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a35acb309344177aa0a2c51db79bf61b') in 0.072397 seconds
-  Import took 0.081513 seconds .
+  path: Assets/Starfield Skybox/Demo
+  artifactKey: Guid(7a4470ba344bcbb44bb67e3c01170b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo using Guid(7a4470ba344bcbb44bb67e3c01170b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a8251438bd897abd904e61f9da9cc9d') in 0.004076 seconds
+  Import took 0.007990 seconds .
 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+========================================================================
+Received Import Request.
+  Time since last request: 2.162459 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures
+  artifactKey: Guid(a1ac2873c4eb8d64db33d7df8acb9188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures using Guid(a1ac2873c4eb8d64db33d7df8acb9188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94900b0f26bddce393ad3ec7598b65e4') in 0.001277 seconds
+  Import took 0.006041 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.103687 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Back_Tex.png
+  artifactKey: Guid(b692a498a0379a341872703d288b04af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Back_Tex.png using Guid(b692a498a0379a341872703d288b04af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ea670eef5e060c51db0359b7242333c') in 0.161571 seconds
+  Import took 0.166721 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000327 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Left_Tex.png
+  artifactKey: Guid(80f1020b68f9b794994187bf41ba9d21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Left_Tex.png using Guid(80f1020b68f9b794994187bf41ba9d21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59e238ebd140fbaf190f7a3480428efc') in 0.034834 seconds
+  Import took 0.039775 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000330 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Right_Tex.png
+  artifactKey: Guid(411c36f0804e8c248a3f6470ca50cd85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Right_Tex.png using Guid(411c36f0804e8c248a3f6470ca50cd85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5165341af20ad8af528f2474aba7061') in 0.038305 seconds
+  Import took 0.043951 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000287 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Front_Tex.png
+  artifactKey: Guid(a5e005e6ff4298340b2ff009a5991908) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Front_Tex.png using Guid(a5e005e6ff4298340b2ff009a5991908) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59ed1a983989ac07861baecfd3b8a47d') in 0.027602 seconds
+  Import took 0.033163 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000770 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Up_Tex.png
+  artifactKey: Guid(8313f24c5bda59240aabef5e6c46f9a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Up_Tex.png using Guid(8313f24c5bda59240aabef5e6c46f9a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b7c17f98695d62df945dc65b74b7514a') in 0.027782 seconds
+  Import took 0.032930 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000819 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Down_Tex.png
+  artifactKey: Guid(a3b2b45ab4da8b343ad09a56207d3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Down_Tex.png using Guid(a3b2b45ab4da8b343ad09a56207d3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cd938a6d94b0981dc76ccbb867591ff') in 0.029058 seconds
+  Import took 0.035278 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000394 seconds.
+  path: Assets/Starfield Skybox/Demo/Textures/Down_Tex.png
+  artifactKey: Guid(a3b2b45ab4da8b343ad09a56207d3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Starfield Skybox/Demo/Textures/Down_Tex.png using Guid(a3b2b45ab4da8b343ad09a56207d3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cd938a6d94b0981dc76ccbb867591ff') in 0.028962 seconds
+  Import took 0.035333 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 273.843684 seconds.
+  path: Assets/Rocks and Boulders 2/Demo/gray.mat
+  artifactKey: Guid(22172bafc2d3a2c4b863543bfada408a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rocks and Boulders 2/Demo/gray.mat using Guid(22172bafc2d3a2c4b863543bfada408a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e84dd530cfc04d9c55991d53f23dd534') in 0.060025 seconds
+  Import took 0.435024 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1429.441877 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Doors and Gates/dfk_door_02_interactive.prefab
+  artifactKey: Guid(5e8fd8db7a4cd34468b86eaf6ec1e8ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Doors and Gates/dfk_door_02_interactive.prefab using Guid(5e8fd8db7a4cd34468b86eaf6ec1e8ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3e8513524f252bfc10591220b690dba') in 0.076147 seconds
+  Import took 0.080919 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002039 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Doors and Gates/dfk_door_02_interactive.prefab
+  artifactKey: Guid(5e8fd8db7a4cd34468b86eaf6ec1e8ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Doors and Gates/dfk_door_02_interactive.prefab using Guid(5e8fd8db7a4cd34468b86eaf6ec1e8ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3e8513524f252bfc10591220b690dba') in 0.062349 seconds
+  Import took 0.066808 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 355.564884 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive
+  artifactKey: Guid(5f9ad32ec28118f42bcb9a99618f34c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive using Guid(5f9ad32ec28118f42bcb9a99618f34c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32d54a58ecd3fe1023314ea8a5c73256') in 0.001101 seconds
+  Import took 0.005496 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.066379 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_blue_interactive.prefab
+  artifactKey: Guid(62db8986d33fce9489712c523e9e74b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_blue_interactive.prefab using Guid(62db8986d33fce9489712c523e9e74b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1bf8613b5da8a865228cac5c63b33b1b') in 0.105534 seconds
+  Import took 0.109814 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000278 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_brown_interactive.prefab
+  artifactKey: Guid(0c4f017a8ee1845458f7d8769d862e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_brown_interactive.prefab using Guid(0c4f017a8ee1845458f7d8769d862e9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3826869ff448827bd7c1de6bae417ce9') in 0.044472 seconds
+  Import took 0.057168 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000691 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_red_interactive.prefab
+  artifactKey: Guid(eaa948a66d3223f4c84ae82f76033ffe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_red_interactive.prefab using Guid(eaa948a66d3223f4c84ae82f76033ffe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '264ecf987c6bf9ef4f160126e6d25a40') in 0.043766 seconds
+  Import took 0.048797 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000346 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_green_interactive.prefab
+  artifactKey: Guid(295a3ceaa9a54ab4a89589b04cd283f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_green_interactive.prefab using Guid(295a3ceaa9a54ab4a89589b04cd283f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca9cf2bde9e4c4e863e33ea75e0ad9fb') in 0.019535 seconds
+  Import took 0.024913 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000338 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_blue_interactive.prefab
+  artifactKey: Guid(f51f4a598414dbd4aaa499202891b028) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_blue_interactive.prefab using Guid(f51f4a598414dbd4aaa499202891b028) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd986ba221aff55c303157b9da0e32cd3') in 0.025435 seconds
+  Import took 0.030420 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000331 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_green_interactive.prefab
+  artifactKey: Guid(5a592a36fed915941bd577e3116c4e87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_green_interactive.prefab using Guid(5a592a36fed915941bd577e3116c4e87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1673f05ec72ecadacbd895f06a1a796a') in 0.019940 seconds
+  Import took 0.039075 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000289 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_red_interactive.prefab
+  artifactKey: Guid(97bbf1dafea60aa4d8a86080aea611ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_red_interactive.prefab using Guid(97bbf1dafea60aa4d8a86080aea611ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9873b5db6e3b7b01e9158111040ef757') in 0.019852 seconds
+  Import took 0.025102 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000325 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_red_interactive.prefab
+  artifactKey: Guid(6411b17925a4ecd4f9ac63c3459c5b90) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_02_red_interactive.prefab using Guid(6411b17925a4ecd4f9ac63c3459c5b90) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6219bd6ea90b72a44ba4023b18ce7c57') in 0.018725 seconds
+  Import took 0.023734 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000317 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_blue_interactive.prefab
+  artifactKey: Guid(b88d293c0a3bb2340a6f7554364a3047) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_blue_interactive.prefab using Guid(b88d293c0a3bb2340a6f7554364a3047) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1bc5ec6d995a8fd85c981b3f5011d825') in 0.017220 seconds
+  Import took 0.024423 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000282 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_brown_interactive.prefab
+  artifactKey: Guid(4e3bd871a0a835249b2d159070488630) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_03_brown_interactive.prefab using Guid(4e3bd871a0a835249b2d159070488630) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95f6eea13b512b1f6ea3afb20d18ce2c') in 0.021082 seconds
+  Import took 0.025755 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000280 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_green_interactive.prefab
+  artifactKey: Guid(8253f3c4079feec45a39ab93a47fc031) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_green_interactive.prefab using Guid(8253f3c4079feec45a39ab93a47fc031) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ccbaff9450497550819d967179d47aa') in 0.019019 seconds
+  Import took 0.023540 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000280 seconds.
+  path: Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_brown_interactive.prefab
+  artifactKey: Guid(05d0e37c55ac29b4ca7b59549bdf494d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RunemarkStudio/DarkFantasyKit/Prefabs/Containers/Chests/Interactive/dfk_chest_01_brown_interactive.prefab using Guid(05d0e37c55ac29b4ca7b59549bdf494d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '034e4ce5cfea1edcd64a1cb569840e14') in 0.017862 seconds
+  Import took 0.023042 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001541 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.98 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.032 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2470 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 169.9 MB.
+System memory in use after: 170.1 MB.
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 3087.
+Total: 2.264200 ms (FindLiveObjects: 0.253600 ms CreateObjectMapping: 0.107700 ms MarkObjects: 1.887900 ms  DeleteObjects: 0.014200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001473 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.67 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.889 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.77 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2470 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 170.0 MB.
+System memory in use after: 170.2 MB.
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 3090.
+Total: 4.075200 ms (FindLiveObjects: 0.530900 ms CreateObjectMapping: 0.228300 ms MarkObjects: 3.209300 ms  DeleteObjects: 0.101000 ms)
+
