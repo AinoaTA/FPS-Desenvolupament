@@ -5,6 +5,7 @@ public class FPS : MonoBehaviour
     private float m_Yaw;
     private float m_Pitch;
 
+    public float DispersionPitch=0;
     public Transform m_PitchControllerTransform;
     public float m_YawRotationalSpeed = 360.0f;
     public float m_PitchRotationalSpeed = -180.0f;
@@ -13,7 +14,7 @@ public class FPS : MonoBehaviour
     public bool m_InvertedYaw = false;
     public bool m_InvertedPitch = true;
 
-    public ShootGun ShootGun;
+    private Shoot shootGun;
     public Camera PCamera;
     public GameObject PrefabParticle;
     private CharacterController m_CharacterController;
@@ -35,8 +36,6 @@ public class FPS : MonoBehaviour
     private float touchingGroundValue = 0.5f;
     private float m_VerticalSpeed = 0.0f;
     private float touchingGround = 0.5f; //initial value
-    private bool m_AngleLocked = false;
-    private bool m_AimLocked = true;
     private bool m_OnGround = false;
 
     private PlayerState playerState;
@@ -45,10 +44,11 @@ public class FPS : MonoBehaviour
     public static DelegateShoot delegateShoot;
     
     bool CanShoot => PlayerState.PlayerStateMode == PlayerState.PlayerMode.Idle;
-    bool isChargerEmpty => ShootGun.CurrentBullets == 0;
+    bool isChargerEmpty => shootGun.CurrentBullets == 0;
     
     void Awake()
     {
+        shootGun = GetComponent<Shoot>(); 
         playerState = GetComponent<PlayerState>();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_CharacterController = GetComponent<CharacterController>();
@@ -61,18 +61,6 @@ public class FPS : MonoBehaviour
     }
     void Update()
     {
-# if UNITY_EDITOR
-        if (Input.GetKeyDown(m_DebugLockAngleKeyCode))
-            m_AngleLocked = !m_AngleLocked;
-        if (Input.GetKeyDown(m_DebugLockKeyCode))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-            m_AimLocked = Cursor.lockState == CursorLockMode.Locked;
-        }
-#endif
         if (CanShoot)
         {
             if (Input.GetMouseButtonDown(0) && !isChargerEmpty)
@@ -87,13 +75,16 @@ public class FPS : MonoBehaviour
     private void PlayerCamera()
     {
         float l_MouseAxisY = Input.GetAxis("Mouse Y");
-        m_Pitch += l_MouseAxisY * m_PitchRotationalSpeed * Time.deltaTime * (m_InvertedPitch ? -1.0f : 1.0f);
+        m_Pitch += (DispersionPitch+l_MouseAxisY) * m_PitchRotationalSpeed * Time.deltaTime * (m_InvertedPitch ? -1.0f : 1.0f);
         float l_MouseAxisX = Input.GetAxis("Mouse X");
         m_Yaw += l_MouseAxisX * m_YawRotationalSpeed * Time.deltaTime * (m_InvertedYaw ? -1.0f : 1.0f);
         m_Pitch = Mathf.Clamp(m_Pitch, m_MinPitch, m_MaxPitch);
 
+        
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchControllerTransform.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
+
+        
     }
     private void PlayerMovement()
     {

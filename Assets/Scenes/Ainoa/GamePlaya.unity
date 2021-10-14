@@ -12129,11 +12129,10 @@ GameObject:
   - component: {fileID: 1740689477525396295}
   - component: {fileID: 1751897039186356295}
   - component: {fileID: 1759849425667776583}
-  - component: {fileID: 6688069299553956683}
   - component: {fileID: 1747069510767853504}
   - component: {fileID: 1747069510767853505}
   m_Layer: 0
-  m_Name: Rifle
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12433,6 +12432,7 @@ GameObject:
   - component: {fileID: 2983526243070909255}
   - component: {fileID: 6413600309770693966}
   - component: {fileID: 2983526243070909250}
+  - component: {fileID: 2983526243070909251}
   m_Layer: 0
   m_Name: Player-FPS
   m_TagString: Player
@@ -12456,6 +12456,26 @@ MonoBehaviour:
   Idle: {fileID: 7400000, guid: fb0d8cf89f07bb4489d2efce0801ec85, type: 2}
   Shooting: {fileID: 7400000, guid: 92d958b0be9e1ca4190234816bd1262c, type: 2}
   Charging: {fileID: 7400000, guid: 5af857dc73a5f874babedb32d0c3dfdb, type: 2}
+--- !u!114 &2983526243070909251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2983526243070909249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3f286d0fd2d9145b2237a2354a61d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentGun: {fileID: 11400000, guid: 11a152f20bdcccd4bba10fd5db96d52a, type: 2}
+  Player: {fileID: 2983526243070909255}
+  CurrentBullets: 0
+  PCamera: {fileID: 2983526244214430497}
+  BulletPrefab: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
+  m_ShootLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!4 &2983526243070909254
 Transform:
   m_ObjectHideFlags: 0
@@ -12485,6 +12505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcec1ab9011a13f4aac17a761f6cdcce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DispersionPitch: 0
   m_PitchControllerTransform: {fileID: 2983526244496270666}
   m_YawRotationalSpeed: 360
   m_PitchRotationalSpeed: 180
@@ -12492,7 +12513,6 @@ MonoBehaviour:
   m_MaxPitch: 50
   m_InvertedYaw: 0
   m_InvertedPitch: 1
-  ShootGun: {fileID: 6688069299553956683}
   PCamera: {fileID: 2983526244214430497}
   PrefabParticle: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
   m_Speed: 10
@@ -98821,24 +98841,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.96, z: -0.25}
---- !u!114 &6688069299553956683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747069510767853503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a3f286d0fd2d9145b2237a2354a61d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentBullets: 4
-  PCamera: {fileID: 2983526244214430497}
-  BulletPrefab: {fileID: 5267226643033989311, guid: cac40858125ba08469e8818d6506febe, type: 3}
-  m_ShootLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!1 &7608078428265580590
 GameObject:
   m_ObjectHideFlags: 0
