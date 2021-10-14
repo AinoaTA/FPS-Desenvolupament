@@ -149,4 +149,26 @@ public class DroneEnemy : MonoBehaviour
     {
         m_NavMeshAgent.destination = m_PatrolWayPoints[m_CurrentWaypointId].position;
     }
+
+    bool SeesPlayer()
+    {
+
+
+        Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+        Vector3 l_EyesDronePos = transform.position + Vector3.up * 1.6f;
+        Vector3 l_Direction = l_Player - l_EyesDronePos;
+        float l_DistanceToPlayer = l_Direction.magnitude;
+        l_Direction.Normalize();
+        Ray l_Ray = new Ray(l_EyesDronePos, l_Direction);
+        if(l_DistanceToPlayer < m_MaxDistanceToPatrol && Vector3.Dot(transform.forward,l_Direction) >= Mathf.Cos(m_ConeAngle*0.5f*Mathf.Deg2Rad))
+            if (Physics.Raycast(l_Ray, l_DistanceToPlayer, m_CollisionLayerMask.value))
+                return true;
+
+        return false;
+
+
+
+
+
+    }
 }
