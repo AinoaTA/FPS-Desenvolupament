@@ -60,6 +60,8 @@ public class Shoot : MonoBehaviour
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
             CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
+            if(l_RaycastHit.collider.CompareTag("Enemy"))
+                    l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
             UpdateBullets();
 
             DispersionEffect();
