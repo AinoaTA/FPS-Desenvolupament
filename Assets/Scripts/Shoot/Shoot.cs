@@ -60,6 +60,8 @@ public class Shoot : MonoBehaviour
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
             CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
+            if(l_RaycastHit.collider.CompareTag("Enemy"))
+                    l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
             UpdateBullets();
 
             DispersionEffect();
@@ -73,7 +75,7 @@ public class Shoot : MonoBehaviour
         bool dispersion = true;
         if (dispersion)
         {
-            Player.DispersionPitch = CurrentGun.upDispersion;
+            Player.Recoil = CurrentGun.upDispersion;
 
             StartCoroutine(DispersionDelay());
         }
@@ -81,7 +83,7 @@ public class Shoot : MonoBehaviour
     private IEnumerator DispersionDelay()
     {
         yield return new WaitForSeconds(0.1f);
-        Player.DispersionPitch = 0;
+        Player.Recoil = 0;
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
     {
@@ -149,5 +151,12 @@ public class Shoot : MonoBehaviour
     private void UpdateTextUI()
     {
         delegateUI?.Invoke(CurrentBullets.ToString() + " / " + maxBulletSaved.ToString());
+    }
+
+    public void AddAmmo(int value)
+    {
+
+        maxBulletSaved += value;
+        UpdateTextUI();
     }
 }

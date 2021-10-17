@@ -54,14 +54,14 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    private void BackToIdle()
-    {
-        timer += Time.deltaTime;
-        if (timer > 2f)
-        {
-            PlayerStateMode = PlayerMode.Idle;
-            timerBool = false;
-            timer = 0;
-        }
-    }
+    //private void BackToIdle()
+    //{
+    //    timer += Time.deltaTime;
+    //    if (timer > 2f)
+    //    {
+    //        PlayerStateMode = PlayerMode.Idle;
+    //        timerBool = false;
+    //        timer = 0;
+    //    }
+    //}
 }
