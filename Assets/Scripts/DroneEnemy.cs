@@ -4,8 +4,9 @@ using UnityEngine.AI;
 using UnityEngine;
 
 public class DroneEnemy : MonoBehaviour
-{  
-    enum IState
+{
+    
+    public enum IState
     {
         IDLE=0,
         CHASE,
@@ -16,11 +17,13 @@ public class DroneEnemy : MonoBehaviour
         DIE
     }
 
-    private IState m_State;
+    public IState m_State;
+    private IState m_LastState;
 
     public float m_ConeAngle = 75f;
     public float m_DistanceToAlert = 5f;
     public float m_MinDistanceToChase = 7f;
+    public float m_MaxDistanceToChase = 12f;
     public float m_MinDistanceToAttack = 3f;
     public float m_MaxDistanceToAttack = 5f;
     public float m_MinDistanceToPatrol = 7f;
@@ -30,17 +33,18 @@ public class DroneEnemy : MonoBehaviour
     public GameObject PrefabLaserBullet;
     NavMeshAgent m_NavMeshAgent;
 
+    private HealthSystem m_HealthSystem;
     private float m_Timer = 0;
     private float m_AttackTimer = 0f;
     private float m_MaxTimer = 3f;
     private int m_CurrentWaypointId;
-    private int m_Life = 10;
     private int m_RotationSpeed = 30;
     float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
 
     private void Awake()
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
+        m_HealthSystem = GetComponent<HealthSystem>();
     }
 
     private void Start()
@@ -100,14 +104,37 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateChaseState()
     {
-        if(m_DistancePlayer >= m_MinDistanceToChase)
+
+        //float l_Near = m_MinDistanceToAttack - m_DistancePlayer;
+
+        //if (l_Near >= m_MinDistanceToChase && m_DistancePlayer < m_MaxDistanceToChase)
+        //{
+        //    SetNextChasePosition();
+
+
+        //}
+        //else if (m_DistancePlayer >= m_MaxDistanceToChase)
+        //    SetAlertState();
+        //float LessDistance = m_DistancePlayer - m_MaxDistanceToChase;
+        //float currentDistance;
+
+        SetNextChasePosition();
+        if (m_DistancePlayer >= m_MinDistanceToChase && m_DistancePlayer < m_MaxDistanceToChase)
         {
-            SetNextChasePosition();
-            if (m_DistancePlayer < m_MinDistanceToAttack)
-                SetAttackState();
+            
+            //currentDistance = m_DistancePlayer - m_MaxDistanceToChase;
+            //if (currentDistance<=LessDistance)
+            //{
+            //    print("atack)");
+            //    SetAttackState();
+            //}    
+            //print(m_NavMeshAgent.destination== m_NavMeshAgent.destination);
+            //if (m_NavMeshAgent.destination == m_NavMeshAgent.destination)
+            SetAttackState();
         }
-        else if (m_DistancePlayer >= m_MaxDistanceToAttack)
+        else if (m_DistancePlayer >= m_MaxDistanceToChase)
             SetAlertState();
+
     }
 
     void SetAlertState()
@@ -154,7 +181,7 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateAttackState()
     {
-        print(m_AttackTimer);
+        //print(m_AttackTimer);
         m_AttackTimer += Time.deltaTime;
         transform.LookAt(GameController.GetGameController().GetPlayer().transform.position);
         if (m_AttackTimer >= 1f)
@@ -175,22 +202,25 @@ public class DroneEnemy : MonoBehaviour
     void SetHitState()
     {
         m_State = IState.HIT;
-
     }
 
     void UpdateHitState()
     {
+        if (m_LastState != IState.IDLE || m_LastState != IState.PATROL)
+            m_State = m_LastState;
+        else
+            SetAlertState();
     }
 
     void SetDieState()
     {
         m_State = IState.DIE;
-
     }
 
     void UpdateDieState()
     {
-        
+        //fade
+
     }
 
     void SetNextChasePosition()
@@ -233,16 +263,16 @@ public class DroneEnemy : MonoBehaviour
             if (!l_Collides)
                 return true;
         return false;
-
-
-
     }
 
-    public void Hit(int amount)
+    public void Hit()
     {
-        m_Life -= amount;
-        if (m_Life > 0)
+        if (m_HealthSystem.m_Life > 0)
+        {
+            m_LastState = m_State;
             SetHitState();
+        }
+
         else
             SetDieState();
     }

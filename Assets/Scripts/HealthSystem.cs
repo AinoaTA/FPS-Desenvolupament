@@ -2,30 +2,29 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    [SerializeField]private float health = 100f;
-    private Drop drop;
-    //private float maxHealth = 100f;
+    public float m_Life;
+    private Drop m_Drop;
+
+    private Enemy m_Enemy;
 
     private void Awake()
     {
-        drop = GetComponent<Drop>();
+        m_Enemy = GetComponent<Enemy>();
+        m_Drop = GetComponent<Drop>();
+    }
+
+    private void Start()
+    {
+        m_Life = 10;//m_Enemy.m_EnemyData.Life;
     }
     public void GetDamage(float damage)
     {
-        health -= damage;
-        print(health);
-        if(health <= 0)
+        m_Life -= damage;
+   
+        if(m_Life <= 0)
         {
-            drop.DropItem();
+            m_Drop.DropItem();
             this.gameObject.SetActive(false);
         }
-    }
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-            GetDamage(10);
     }
 }

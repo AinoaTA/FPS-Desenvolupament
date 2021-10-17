@@ -2,7 +2,6 @@
 
 public class HitCollider : MonoBehaviour
 {
-
     public enum HitColliderType
     {
         HELIX=0,
@@ -10,11 +9,15 @@ public class HitCollider : MonoBehaviour
         HEAD
     }
     public HitColliderType m_HitColliderType;
+    private HealthSystem m_HealthSystem;
     public DroneEnemy m_Enemy;
     const int m_HelixHitAmount = 20;
     const int m_BodyHitAmount = 10;
     const int m_HeadHitAmount = 50;
-
+    private void Start()
+    {
+        m_HealthSystem = GetComponent<HealthSystem>();
+    }
     public void Hit()
     {
         int l_HitAmount = m_HeadHitAmount;
@@ -22,6 +25,7 @@ public class HitCollider : MonoBehaviour
             l_HitAmount = m_BodyHitAmount;
         else if (m_HitColliderType == HitColliderType.HELIX)
             l_HitAmount = m_HelixHitAmount;
-        m_Enemy.Hit(l_HitAmount);
+        m_HealthSystem.GetDamage(l_HitAmount);
+         m_Enemy.Hit();
     }
 }
