@@ -49,7 +49,7 @@ public class HealthSystemPlayer : MonoBehaviour
             print("EE");
             delegateUi?.Invoke(currentLife);
         }
-        print("ui health");
+       // print("ui health");
 
         
     }

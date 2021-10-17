@@ -4,7 +4,8 @@ using UnityEngine.AI;
 using UnityEngine;
 
 public class DroneEnemy : MonoBehaviour
-{   enum IState
+{  
+    enum IState
     {
         IDLE=0,
         CHASE,
@@ -17,22 +18,25 @@ public class DroneEnemy : MonoBehaviour
 
     private IState m_State;
 
-    public float m_ConeAngle = 60f;
+    public float m_ConeAngle = 75f;
     public float m_DistanceToAlert = 5f;
-    public float m_MinDistanceToChase = 5f;
+    public float m_MinDistanceToChase = 7f;
     public float m_MinDistanceToAttack = 3f;
     public float m_MaxDistanceToAttack = 5f;
     public float m_MinDistanceToPatrol = 7f;
     public float m_MaxDistanceToPatrol = 15f;
     public LayerMask m_CollisionLayerMask;
     public List<Transform> m_PatrolWayPoints;
+    public GameObject PrefabLaserBullet;
     NavMeshAgent m_NavMeshAgent;
+
     private float m_Timer = 0;
+    private float m_AttackTimer = 0f;
     private float m_MaxTimer = 3f;
     private int m_CurrentWaypointId;
     private int m_Life = 10;
-    private int m_RotationSpeed = 20;
-    private float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
+    private int m_RotationSpeed = 30;
+    float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
 
     private void Awake()
     {
@@ -45,6 +49,7 @@ public class DroneEnemy : MonoBehaviour
     }
     private void Update()
     {
+        print(m_State);
         switch (m_State)
         {
             case IState.IDLE:
@@ -71,6 +76,8 @@ public class DroneEnemy : MonoBehaviour
             default:
                 break;
         }
+
+        
     }
     void SetIdleState()
     {
@@ -83,7 +90,6 @@ public class DroneEnemy : MonoBehaviour
         m_Timer += Time.deltaTime;
         if(m_Timer>m_MaxTimer)
             SetPatrolState();
-        print(m_Timer);
     }
 
     void SetChaseState()
@@ -94,6 +100,17 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateChaseState()
     {
+        if(m_DistancePlayer< m_MinDistanceToChase)
+        {
+            SetNextChasePosition();
+            if (m_DistancePlayer < m_MaxDistanceToAttack && m_DistancePlayer >= m_MinDistanceToAttack)
+                SetAttackState();
+        }
+            
+        else if (m_DistancePlayer >= m_MinDistanceToChase)
+            SetAlertState();
+
+
     }
 
     void SetAlertState()
@@ -108,10 +125,13 @@ public class DroneEnemy : MonoBehaviour
         Vector3 rotate = transform.localRotation.eulerAngles + new Vector3(0, m_RotationSpeed * Time.deltaTime, 0);
         transform.localRotation = Quaternion.Euler(rotate);
 
-        if (SeesPlayer())// && m_DistancePlayer <= m_MinDistanceToChase)//&& m_DistancePlayer < m_MaxDistanceToAttack)
+        if (SeesPlayer())
             SetChaseState();
-        else
+        else if (transform.localRotation.eulerAngles.y >= 359)
+        {
+            Debug.Log("No se ha avistado ningún intruso.");
             SetPatrolState();
+        }
     }
 
     void SetPatrolState()
@@ -125,7 +145,7 @@ public class DroneEnemy : MonoBehaviour
         if (!m_NavMeshAgent.hasPath && m_NavMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
             MoveToNextPatrolPosition();
 
-        if (m_DistanceToAlert <= m_DistancePlayer)
+        if (m_DistancePlayer <= m_DistanceToAlert)
             SetAlertState();
     }
 
@@ -137,6 +157,18 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateAttackState()
     {
+        print(m_AttackTimer);
+        m_AttackTimer += Time.deltaTime;
+        transform.LookAt(GameController.GetGameController().GetPlayer().transform.position);
+        if (m_AttackTimer >= 1f)
+        {
+            Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+            //GameObject l_Laser = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity, transform.parent);
+
+            GameObject l_Bullet = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity);
+            m_AttackTimer = 0;
+        }
+
     }
 
     void SetHitState()
@@ -182,20 +214,23 @@ public class DroneEnemy : MonoBehaviour
     bool SeesPlayer()
     {
 
-
         Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
-        Vector3 l_EyesDronePos = transform.position + Vector3.up * 1.6f;
+        Vector3 l_EyesDronePos = transform.position;
         Vector3 l_Direction = l_Player - l_EyesDronePos;
+
         float l_DistanceToPlayer = l_Direction.magnitude;
         l_Direction.Normalize();
-        Ray l_Ray = new Ray(l_EyesDronePos, l_Direction);
-        if(l_DistanceToPlayer < m_MaxDistanceToPatrol && Vector3.Dot(transform.forward,l_Direction) >= Mathf.Cos(m_ConeAngle*0.5f*Mathf.Deg2Rad))
-            if (Physics.Raycast(l_Ray, l_DistanceToPlayer, m_CollisionLayerMask.value))
+
+        Ray l_Ray = new Ray(transform.position, l_Direction);
+        bool l_Collides = Physics.Raycast(l_Ray, l_DistanceToPlayer, m_CollisionLayerMask.value);
+
+        Debug.DrawRay(transform.position, l_Direction * l_DistanceToPlayer, 
+            (!l_Collides && Vector3.Dot(transform.forward, l_Direction) >= Mathf.Cos(m_ConeAngle * 0.5f * Mathf.Deg2Rad)) ? Color.red : Color.yellow);
+
+        if (l_DistanceToPlayer < m_MaxDistanceToPatrol && Vector3.Dot(transform.forward,l_Direction) >= Mathf.Cos(m_ConeAngle*0.5f*Mathf.Deg2Rad))
+            if (!l_Collides)
                 return true;
-
         return false;
-
-
 
 
 
