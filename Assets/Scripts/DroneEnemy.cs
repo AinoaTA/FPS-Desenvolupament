@@ -100,17 +100,14 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateChaseState()
     {
-        if(m_DistancePlayer< m_MinDistanceToChase)
+        if(m_DistancePlayer >= m_MinDistanceToChase)
         {
             SetNextChasePosition();
-            if (m_DistancePlayer < m_MaxDistanceToAttack && m_DistancePlayer >= m_MinDistanceToAttack)
+            if (m_DistancePlayer < m_MinDistanceToAttack)
                 SetAttackState();
         }
-            
-        else if (m_DistancePlayer >= m_MinDistanceToChase)
+        else if (m_DistancePlayer >= m_MaxDistanceToAttack)
             SetAlertState();
-
-
     }
 
     void SetAlertState()
@@ -169,6 +166,10 @@ public class DroneEnemy : MonoBehaviour
             m_AttackTimer = 0;
         }
 
+        if(m_DistancePlayer> m_MinDistanceToChase)
+            SetChaseState();
+        
+
     }
 
     void SetHitState()
@@ -200,6 +201,7 @@ public class DroneEnemy : MonoBehaviour
         l_DirectionToPlayer.Normalize();
         Vector3 l_Destination = l_Player - l_DirectionToPlayer * m_MinDistanceToAttack;
         m_NavMeshAgent.destination = l_Destination;
+        
     }
 
     void MoveToNextPatrolPosition()
