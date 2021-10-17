@@ -14,6 +14,6 @@ public class LifeItem : Items
         gameObject.SetActive(false);
 
         GameController.GetGameController().GetPlayer().AddLife(m_LifeCount);
-        print("nw life");
+       // print("nw life");
     }
 }

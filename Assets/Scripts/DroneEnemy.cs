@@ -17,7 +17,7 @@ public class DroneEnemy : MonoBehaviour
 
     private IState m_State;
 
-    public float m_ConeAngle = 60f;
+    public float m_ConeAngle = 75f;
     public float m_DistanceToAlert = 5f;
     public float m_MinDistanceToChase = 5f;
     public float m_MinDistanceToAttack = 3f;
@@ -31,8 +31,8 @@ public class DroneEnemy : MonoBehaviour
     private float m_MaxTimer = 3f;
     private int m_CurrentWaypointId;
     private int m_Life = 10;
-    private int m_RotationSpeed = 20;
-    private float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
+    private int m_RotationSpeed = 30;
+    float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class DroneEnemy : MonoBehaviour
     }
     private void Update()
     {
+        print(m_State);
         switch (m_State)
         {
             case IState.IDLE:
@@ -71,6 +72,8 @@ public class DroneEnemy : MonoBehaviour
             default:
                 break;
         }
+
+        
     }
     void SetIdleState()
     {
@@ -83,7 +86,7 @@ public class DroneEnemy : MonoBehaviour
         m_Timer += Time.deltaTime;
         if(m_Timer>m_MaxTimer)
             SetPatrolState();
-        print(m_Timer);
+      //  print(m_Timer);
     }
 
     void SetChaseState()
@@ -94,6 +97,15 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateChaseState()
     {
+        //float l_Speed = 10f;
+        //Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+
+
+        SetNextChasePosition();
+
+        if (m_DistancePlayer >= m_MaxDistanceToAttack)
+           SetAlertState();
+
     }
 
     void SetAlertState()
@@ -107,11 +119,15 @@ public class DroneEnemy : MonoBehaviour
         
         Vector3 rotate = transform.localRotation.eulerAngles + new Vector3(0, m_RotationSpeed * Time.deltaTime, 0);
         transform.localRotation = Quaternion.Euler(rotate);
+        SeesPlayer();
 
-        if (SeesPlayer())// && m_DistancePlayer <= m_MinDistanceToChase)//&& m_DistancePlayer < m_MaxDistanceToAttack)
+        if (SeesPlayer())
             SetChaseState();
-        else
+        else if (transform.localRotation.eulerAngles.y >= 359)
+        {
+            Debug.Log("No se ha avistado ningún intruso.");
             SetPatrolState();
+        }
     }
 
     void SetPatrolState()
@@ -125,7 +141,7 @@ public class DroneEnemy : MonoBehaviour
         if (!m_NavMeshAgent.hasPath && m_NavMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
             MoveToNextPatrolPosition();
 
-        if (m_DistanceToAlert <= m_DistancePlayer)
+        if (m_DistancePlayer <= m_DistanceToAlert)
             SetAlertState();
     }
 
@@ -182,20 +198,23 @@ public class DroneEnemy : MonoBehaviour
     bool SeesPlayer()
     {
 
-
         Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
-        Vector3 l_EyesDronePos = transform.position + Vector3.up * 1.6f;
+        Vector3 l_EyesDronePos = transform.position;
         Vector3 l_Direction = l_Player - l_EyesDronePos;
+
         float l_DistanceToPlayer = l_Direction.magnitude;
         l_Direction.Normalize();
-        Ray l_Ray = new Ray(l_EyesDronePos, l_Direction);
-        if(l_DistanceToPlayer < m_MaxDistanceToPatrol && Vector3.Dot(transform.forward,l_Direction) >= Mathf.Cos(m_ConeAngle*0.5f*Mathf.Deg2Rad))
-            if (Physics.Raycast(l_Ray, l_DistanceToPlayer, m_CollisionLayerMask.value))
+
+        Ray l_Ray = new Ray(transform.position, l_Direction);
+        bool l_Collides = Physics.Raycast(l_Ray, l_DistanceToPlayer, m_CollisionLayerMask.value);
+
+        Debug.DrawRay(transform.position, l_Direction * l_DistanceToPlayer, 
+            (!l_Collides && Vector3.Dot(transform.forward, l_Direction) >= Mathf.Cos(m_ConeAngle * 0.5f * Mathf.Deg2Rad)) ? Color.red : Color.yellow);
+
+        if (l_DistanceToPlayer < m_MaxDistanceToPatrol && Vector3.Dot(transform.forward,l_Direction) >= Mathf.Cos(m_ConeAngle*0.5f*Mathf.Deg2Rad))
+            if (!l_Collides)
                 return true;
-
         return false;
-
-
 
 
 
