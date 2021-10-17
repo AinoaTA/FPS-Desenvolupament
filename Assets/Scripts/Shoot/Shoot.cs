@@ -95,7 +95,6 @@ public class Shoot : MonoBehaviour
     private IEnumerator ShootingDelay()
     {
         yield return new WaitForSeconds(0.2f);
-        print("no updateo");
         playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
     }
     //**********************************************************
