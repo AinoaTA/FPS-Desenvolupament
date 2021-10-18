@@ -33,7 +33,7 @@ public class DroneEnemy : MonoBehaviour
     public GameObject PrefabLaserBullet;
     NavMeshAgent m_NavMeshAgent;
 
-    private HealthSystem m_HealthSystem;
+    private HealthSystemEnemy m_HealthSystem;
     private float m_Timer = 0;
     private float m_AttackTimer = 0f;
     private float m_MaxTimer = 3f;
@@ -44,7 +44,7 @@ public class DroneEnemy : MonoBehaviour
     private void Awake()
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
-        m_HealthSystem = GetComponent<HealthSystem>();
+        m_HealthSystem = GetComponent<HealthSystemEnemy>();
     }
 
     private void Start()
@@ -181,13 +181,12 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateAttackState()
     {
-        //print(m_AttackTimer);
+
         m_AttackTimer += Time.deltaTime;
         transform.LookAt(GameController.GetGameController().GetPlayer().transform.position);
         if (m_AttackTimer >= 1f)
         {
             Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
-            //GameObject l_Laser = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity, transform.parent);
 
             GameObject l_Bullet = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity);
             m_AttackTimer = 0;
@@ -195,8 +194,6 @@ public class DroneEnemy : MonoBehaviour
 
         if(m_DistancePlayer> m_MinDistanceToChase)
             SetChaseState();
-        
-
     }
 
     void SetHitState()
@@ -230,8 +227,7 @@ public class DroneEnemy : MonoBehaviour
         l_DirectionToPlayer.y = 0;
         l_DirectionToPlayer.Normalize();
         Vector3 l_Destination = l_Player - l_DirectionToPlayer * m_MinDistanceToAttack;
-        m_NavMeshAgent.destination = l_Destination;
-        
+        m_NavMeshAgent.destination = l_Destination; 
     }
 
     void MoveToNextPatrolPosition()

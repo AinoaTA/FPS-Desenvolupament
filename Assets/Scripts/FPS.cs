@@ -140,12 +140,6 @@ public class FPS : MonoBehaviour
             touchingGround = 0f;
         }
     }
-
-    //private void a()
-    //{
-    //    GameController.GetGameController();
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
@@ -156,8 +150,8 @@ public class FPS : MonoBehaviour
         }
     }
 
-    public void AddLife(int amount)
-    {
-        m_life += amount;
-    }
+    //public void AddLife(int amount)
+    //{
+    //    m_life += amount;
+    //}
 }

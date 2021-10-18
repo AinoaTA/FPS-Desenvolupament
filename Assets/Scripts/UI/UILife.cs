@@ -6,19 +6,26 @@ using TMPro;
 public class UILife : MonoBehaviour
 {
     public TMP_Text Life;
+    public TMP_Text Shield;
+    public HealthSystemPlayer m_HealthSystemPlayer;
     private void OnEnable()
     {
-        HealthSystemPlayer.delegateUi += UpdateLifeText;
+        m_HealthSystemPlayer.delegateUIHealth += UpdateLifeText;
+        m_HealthSystemPlayer.delegateUIShield += UpdateShieldText;
     }
 
     private void OnDisable()
     {
-        HealthSystemPlayer.delegateUi -= UpdateLifeText;
+        m_HealthSystemPlayer.delegateUIHealth -= UpdateLifeText;
+        m_HealthSystemPlayer.delegateUIShield -= UpdateShieldText;
     }
 
-
-    private void UpdateLifeText(int value)
+    private void UpdateLifeText(float value)
     {
         Life.text = value.ToString();
+    }
+    private void UpdateShieldText(float value)
+    {
+        Shield.text = value.ToString();
     }
 }
