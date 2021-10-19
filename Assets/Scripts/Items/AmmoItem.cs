@@ -8,7 +8,7 @@ public class AmmoItem : Items
 
     public override bool CanPick()
     {
-        if (GameController.GetGameController().GetPlayer().GetComponent<Shoot>().CurrentBullets != GameController.GetGameController().GetPlayer().GetComponent<Shoot>().maxBulletSaved)
+        if (GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetMaxBullets() != GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetCurrentBulletSaved())
             return true;
         return false;
     }

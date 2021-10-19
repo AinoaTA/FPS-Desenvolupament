@@ -10,10 +10,6 @@ public class PlayerState : MonoBehaviour
 
     public delegate void ChargingDelegate();
     public event ChargingDelegate chargingDelegate;
-    private void Update()
-    {
-        print(PlayerStateMode);
-    }
     public enum PlayerMode
     {
         Idle,

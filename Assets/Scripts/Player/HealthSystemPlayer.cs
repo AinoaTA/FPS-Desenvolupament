@@ -39,7 +39,6 @@ public class HealthSystemPlayer : MonoBehaviour
 
 
         delegateUIShield.Invoke(m_ShieldLifeTime);
-       // delegateUi?.Invoke(m_ShieldLifeTime);
     }
 
     public void GetDamage(float value)

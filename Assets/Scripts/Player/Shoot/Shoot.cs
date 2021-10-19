@@ -6,9 +6,23 @@ public class Shoot : MonoBehaviour
     public Gun CurrentGun;
     public FPS Player;
 
-    public int maxBulletSaved;
+    private int maxBulletSaved;
+    private int CurrentBulletsSaved;
     private int bulletForCharger;
-    public int CurrentBullets;
+    private int CurrentBullets;
+    public int GetMaxBullets()
+    {
+        return maxBulletSaved;
+    }
+    public int GetCurrentBullets()
+    {
+        return CurrentBullets;
+    }
+
+    public int GetCurrentBulletSaved()
+    {
+        return CurrentBulletsSaved;
+    }
 
 
     public Camera PCamera;
@@ -18,7 +32,7 @@ public class Shoot : MonoBehaviour
     //to call event delegate
     private PlayerState playerState;
 
-    public delegate void DelegateUI(string text);
+    public delegate void DelegateUI(int current, int max, int forCharger);//string text);
     public static DelegateUI delegateUI;
 
 
@@ -40,9 +54,12 @@ public class Shoot : MonoBehaviour
     }
     private void Start()
     {
-        CurrentBullets = CurrentGun.currentBullets;
-        maxBulletSaved = CurrentGun.maxBulletSaved;
+
         bulletForCharger = CurrentGun.bulletForCharger;
+        CurrentBullets = CurrentGun.currentBullets;
+        CurrentBulletsSaved = CurrentGun.maxBulletSaved;
+        maxBulletSaved = CurrentBulletsSaved;
+
         UpdateTextUI();
 
     }
@@ -66,8 +83,10 @@ public class Shoot : MonoBehaviour
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
             }else if(l_RaycastHit.collider.CompareTag("Gallery"))
             {
-                l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>().SetShot();
-                ShooterPoints.GetShooterPoints().AddPoints(1);
+                GalleryAnimation temp = l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>();
+                temp.SetShot();
+
+                ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
                    
             UpdateBullets();
@@ -84,7 +103,6 @@ public class Shoot : MonoBehaviour
         if (dispersion)
         {
             Player.Recoil = CurrentGun.upDispersion;
-
             StartCoroutine(DispersionDelay());
         }
     }
@@ -114,30 +132,30 @@ public class Shoot : MonoBehaviour
     //**********************************************************
     public void Charging()
     {
-        if (maxBulletSaved > 0)
+        if (CurrentBulletsSaved > 0)
         {
             //si sigue habiendo más balas q las que puede tener cargadas
-            if(maxBulletSaved > bulletForCharger)
+            if(CurrentBulletsSaved > bulletForCharger)
             {
-                maxBulletSaved -= (bulletForCharger - CurrentBullets);
+                CurrentBulletsSaved -= (bulletForCharger - CurrentBullets);
                 CurrentBullets = bulletForCharger;
             } 
-            else if (maxBulletSaved <= bulletForCharger)
+            else if (CurrentBulletsSaved <= bulletForCharger)
             {
                 int total = bulletForCharger -CurrentBullets;
 
-                if (maxBulletSaved > total)
-                    maxBulletSaved -= total;
-                else if (maxBulletSaved <= total)
+                if (CurrentBulletsSaved > total)
+                    CurrentBulletsSaved -= total;
+                else if (CurrentBulletsSaved <= total)
                 {
                     int t = total;
-                    total = maxBulletSaved;
-                    maxBulletSaved -= t;
+                    total = CurrentBulletsSaved;
+                    CurrentBulletsSaved -= t;
                 }
                 CurrentBullets += total;
             }
-            if (maxBulletSaved < 0)
-                maxBulletSaved = 0;            
+            if (CurrentBulletsSaved < 0)
+                CurrentBulletsSaved = 0;            
         }
         UpdateTextUI();
         StartCoroutine(ChargingDelay());
@@ -157,13 +175,17 @@ public class Shoot : MonoBehaviour
     }
     private void UpdateTextUI()
     {
-        delegateUI?.Invoke(CurrentBullets.ToString() + " / " + maxBulletSaved.ToString());
+        delegateUI?.Invoke(CurrentBullets,CurrentBulletsSaved,bulletForCharger);
     }
 
     public void AddAmmo(int value)
     {
+        float total = value + CurrentBulletsSaved;
+        if (total > maxBulletSaved)
+            CurrentBulletsSaved += (maxBulletSaved - CurrentBulletsSaved);
+        else
+            CurrentBulletsSaved += value;
 
-        maxBulletSaved += value;
         UpdateTextUI();
     }
 }

@@ -19,8 +19,17 @@ public class UICharger : MonoBehaviour
         Shoot.delegateUI -= UpdateText;
     }
 
-    private void UpdateText(string bulletText)
+    private void UpdateText(int current, int max, int forCharger)
     {
-        tmp.text = bulletText;
+        if (forCharger * 0.8 < current)
+            tmp.color = Color.white;
+        else if (forCharger * 0.8 >= current && current >= forCharger * 0.5)
+            tmp.color = Color.yellow;
+        else if (forCharger * 0.5 > current && current >= forCharger * 0.3)
+            tmp.color = new Color(1.0f, 0.64f, 0.0f);
+        else if (forCharger * 0.3 > current && current >= 0)
+            tmp.color = Color.red;
+
+        tmp.text = current + "/" + max;
     }
 }

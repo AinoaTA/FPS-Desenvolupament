@@ -22,6 +22,12 @@ public class UIPoints : MonoBehaviour
 
     private void UpdateText(int value, int max)
     {
-        tmp.text = value.ToString() + "/" + max.ToString();
+        if (value >= max)
+            tmp.color = Color.green;
+        else
+            tmp.color = Color.white;
+
+        if (gameObject != null)
+        tmp.text = "Points: "+ value.ToString() + "/" + max.ToString();
     }
 }

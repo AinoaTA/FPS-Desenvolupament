@@ -8,6 +8,8 @@ public class GalleryAnimation : MonoBehaviour
 
     private float timer;
     private float timerRevive;
+
+    public int m_Points;
     public enum AnimationStates
     {
         Idle,
@@ -61,7 +63,7 @@ public class GalleryAnimation : MonoBehaviour
             default:
                 break;
         }
-        print(gameObject.name + " "+m_CurrentState);
+        //print(gameObject.name + " "+m_CurrentState);
     } 
 
     //SETS

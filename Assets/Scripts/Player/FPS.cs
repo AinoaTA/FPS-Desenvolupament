@@ -39,15 +39,13 @@ public class FPS : MonoBehaviour
     private float touchingGround = 0.5f; //initial value
     private bool m_OnGround = false;
 
-    public int m_life = 100;
-
     private PlayerState playerState;
 
     public delegate void DelegateShoot();
     public static DelegateShoot delegateShoot;
     
     bool CanShoot => PlayerState.PlayerStateMode == PlayerState.PlayerMode.Idle;
-    bool isChargerEmpty => shootGun.CurrentBullets == 0;
+    bool isChargerEmpty => shootGun.GetCurrentBullets() == 0;
     
     void Awake()
     {
@@ -149,9 +147,4 @@ public class FPS : MonoBehaviour
                 l_Item.Pick();
         }
     }
-
-    //public void AddLife(int amount)
-    //{
-    //    m_life += amount;
-    //}
 }
