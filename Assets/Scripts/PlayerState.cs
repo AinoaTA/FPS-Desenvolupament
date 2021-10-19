@@ -5,9 +5,6 @@ public class PlayerState : MonoBehaviour
     public Animation Anim;
     public AnimationClip Idle, Shooting, Charging;
 
-    private bool timerBool;
-    private float timer;
-
     public delegate void ShootDelegate();
     public event ShootDelegate shootDelegate;
 
@@ -16,8 +13,6 @@ public class PlayerState : MonoBehaviour
     private void Update()
     {
         print(PlayerStateMode);
-        //if (timerBool)
-        //      BackToIdle();
     }
     public enum PlayerMode
     {
@@ -44,7 +39,6 @@ public class PlayerState : MonoBehaviour
             case PlayerMode.Shooting:
                 Anim.CrossFade("Shooting", 0f);
                 shootDelegate?.Invoke();
-                timerBool = true;
                 break;
 
             case PlayerMode.Charging:
@@ -53,15 +47,4 @@ public class PlayerState : MonoBehaviour
                 break;
         }
     }
-
-    //private void BackToIdle()
-    //{
-    //    timer += Time.deltaTime;
-    //    if (timer > 2f)
-    //    {
-    //        PlayerStateMode = PlayerMode.Idle;
-    //        timerBool = false;
-    //        timer = 0;
-    //    }
-    //}
 }
