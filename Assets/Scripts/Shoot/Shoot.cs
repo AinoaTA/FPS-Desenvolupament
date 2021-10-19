@@ -6,7 +6,7 @@ public class Shoot : MonoBehaviour
     public Gun CurrentGun;
     public FPS Player;
 
-    private int maxBulletSaved;
+    public int maxBulletSaved;
     private int bulletForCharger;
     public int CurrentBullets;
 
@@ -59,18 +59,24 @@ public class Shoot : MonoBehaviour
         RaycastHit l_RaycastHit;
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
-            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
-            if(l_RaycastHit.collider.CompareTag("Enemy"))
-                    l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
+            print(l_RaycastHit.collider.name);
+            //CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
+            if (l_RaycastHit.collider.CompareTag("Enemy"))
+            {
+                print("enmy");
+                l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
+
+            }
+                   
             UpdateBullets();
 
-            DispersionEffect();
+            RecoilEffect();
             StartCoroutine(ShootingDelay());
         }
         else { playerState.UpdateShoot(PlayerState.PlayerMode.Idle); }
     }
 
-    private void DispersionEffect()
+    private void RecoilEffect()
     {
         bool dispersion = true;
         if (dispersion)

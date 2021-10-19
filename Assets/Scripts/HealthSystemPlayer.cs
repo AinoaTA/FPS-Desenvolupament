@@ -4,53 +4,64 @@ using UnityEngine;
 
 public class HealthSystemPlayer : MonoBehaviour
 {
-    private int maxLife = 100;
-    static int currentLife = 100;
+    public float maxLife = 100;
+    public float m_MaxShieldLifeTime = 100;
+    public float m_ShieldLifeTime = 100;
+    public float currentLife = 100f;
 
-    public delegate void DelegateUiLife(int value);
-    public static DelegateUiLife delegateUi;
+    public delegate void DelegateUiLife(float value);
+    public event DelegateUiLife delegateUIHealth;
+    public delegate void DelegateUIShield(float value);
+    public event DelegateUIShield delegateUIShield;
 
-    static public int GetCurrentLife()
+    public void AddLife(float value)
     {
-        return currentLife;
-    }
-
-    public void AddLife(int value)
-    {
-        int total = value + currentLife;
+        float total = value + currentLife;
         if (total>maxLife)
         {
             currentLife += maxLife - currentLife;
         }else
         currentLife += value;
+
+        delegateUIHealth?.Invoke(currentLife);
     }
 
-    static public void RemoveLife(int value)
+    public void AddShieldLife(float value)
     {
-       
-        if (currentLife<=0)
+        float total = value + m_ShieldLifeTime;
+
+        if (total > m_MaxShieldLifeTime)
         {
-            //die moment
+            m_ShieldLifeTime += m_MaxShieldLifeTime - m_ShieldLifeTime;
         }
+        else
+            m_ShieldLifeTime += value;
+
+
+        delegateUIShield.Invoke(m_ShieldLifeTime);
+       // delegateUi?.Invoke(m_ShieldLifeTime);
     }
 
-    private void Update()
+    public void GetDamage(float value)
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (m_ShieldLifeTime > 0)
         {
-            AddLife(25);
-            print("AA");
-            delegateUi?.Invoke(currentLife);
+            currentLife -= value * 0.25f;
+            m_ShieldLifeTime -= value * 0.75f;
         }
-            
-        if (Input.GetKeyDown(KeyCode.X))
+        if (m_ShieldLifeTime <= 0)
         {
-            currentLife -= 15;
-            print("EE");
-            delegateUi?.Invoke(currentLife);
+            m_ShieldLifeTime = 0;
+            currentLife -= value;
         }
-       // print("ui health");
 
-        
+        if (currentLife <= 0)
+        {
+            currentLife = 0;
+            //die anim
+        }
+
+        delegateUIHealth?.Invoke(currentLife);
+        delegateUIShield.Invoke(m_ShieldLifeTime);
     }
 }

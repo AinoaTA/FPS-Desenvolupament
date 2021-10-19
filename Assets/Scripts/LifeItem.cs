@@ -2,18 +2,23 @@
 public class LifeItem : Items
 {
 
-    public int m_LifeCount;
+    [SerializeField] private int m_LifeCount;
+
+    public int m_LifeMinCount = 10;
+    public int m_LifeMaxCount = 30;
 
     public override bool CanPick()
     {
-        return true;
+        if (GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().currentLife != GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().maxLife)
+            return true;
+        return false;
     }
 
     public override void Pick()
     {
+        m_LifeCount = Random.Range(m_LifeMinCount, m_LifeMaxCount);
         gameObject.SetActive(false);
 
-        GameController.GetGameController().GetPlayer().AddLife(m_LifeCount);
-       // print("nw life");
+        GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().AddLife(m_LifeCount);
     }
 }

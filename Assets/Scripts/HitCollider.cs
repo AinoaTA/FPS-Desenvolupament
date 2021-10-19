@@ -9,14 +9,14 @@ public class HitCollider : MonoBehaviour
         HEAD
     }
     public HitColliderType m_HitColliderType;
-    private HealthSystem m_HealthSystem;
+    private HealthSystemEnemy m_HealthSystem;
     public DroneEnemy m_Enemy;
     const int m_HelixHitAmount = 20;
     const int m_BodyHitAmount = 10;
     const int m_HeadHitAmount = 50;
     private void Start()
     {
-        m_HealthSystem = GetComponent<HealthSystem>();
+        m_HealthSystem = GetComponentInParent<HealthSystemEnemy>();
     }
     public void Hit()
     {
@@ -26,6 +26,6 @@ public class HitCollider : MonoBehaviour
         else if (m_HitColliderType == HitColliderType.HELIX)
             l_HitAmount = m_HelixHitAmount;
         m_HealthSystem.GetDamage(l_HitAmount);
-         m_Enemy.Hit();
+        m_Enemy.Hit();
     }
 }
