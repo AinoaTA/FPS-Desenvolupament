@@ -63,9 +63,11 @@ public class Shoot : MonoBehaviour
             //CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
             if (l_RaycastHit.collider.CompareTag("Enemy"))
             {
-                print("enmy");
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
-
+            }else if(l_RaycastHit.collider.CompareTag("Gallery"))
+            {
+                l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>().SetShot();
+                ShooterPoints.GetShooterPoints().AddPoints(1);
             }
                    
             UpdateBullets();
