@@ -11,7 +11,7 @@ public class HealthSystemEnemy : MonoBehaviour
 
     private void Start()
     {
-        m_Life = 50f;
+        m_Life = 100f;
     }
     public void GetDamage(float damage)
     {

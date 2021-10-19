@@ -2947,6 +2947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080ce342418ff8742a9f2e3ab338cc65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CurrentPoints: 0
 --- !u!4 &471433512
 Transform:
   m_ObjectHideFlags: 0
@@ -99491,6 +99492,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7314528742176124322, guid: 6758cb335eb37cb4eba6052082444259,
+        type: 3}
+      propertyPath: m_Life
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7314528742176124344, guid: 6758cb335eb37cb4eba6052082444259,
         type: 3}
       propertyPath: m_PatrolWayPoints.Array.data[0]
