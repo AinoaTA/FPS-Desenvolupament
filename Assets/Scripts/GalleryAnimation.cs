@@ -5,8 +5,8 @@ using UnityEngine;
 public class GalleryAnimation : MonoBehaviour
 {
 
-    public Animation animation;
-    public AnimationClip Idle, Shot, Moving, Fall;
+    private Animation animation;
+    public AnimationClip Idle, Shot, Fall;
 
     private float timer;
     public enum AnimationStates
@@ -14,22 +14,30 @@ public class GalleryAnimation : MonoBehaviour
         Idle,
         Shot,
         Fall,
-        Moving
     }
 
     //algunas se moverán y otras no.
     public AnimationStates m_DefaultState; //aquí setearemos cual de ellas
     private AnimationStates m_CurrentState;
 
+    private void Awake()
+    {
+        animation = GetComponent<Animation>();
+    }
 
     private void Start()
     {
+       
         m_CurrentState = AnimationStates.Idle;
 
         if (m_DefaultState != m_CurrentState)
             m_CurrentState = m_DefaultState;
     }
 
+    private void Update()
+    {
+        UpdateAnimation();
+    }
     private void UpdateAnimation()
     {
         switch (m_CurrentState)
@@ -42,9 +50,6 @@ public class GalleryAnimation : MonoBehaviour
                 break;
             case AnimationStates.Fall:
                 UpdateFall();
-                break;
-            case AnimationStates.Moving:
-                UpdateMoving();
                 break;
             default:
                 break;
@@ -60,7 +65,7 @@ public class GalleryAnimation : MonoBehaviour
        
     }
     public void SetFall() { m_CurrentState = AnimationStates.Fall; }
-    public void SetMoving() { m_CurrentState = AnimationStates.Moving; }
+
 
     //UPDATES
     private void UpdateIdle() { animation.CrossFade("Idle"); }
@@ -73,6 +78,5 @@ public class GalleryAnimation : MonoBehaviour
             animation.CrossFadeQueued("Fall");
     }
     private void UpdateFall() { animation.CrossFade("Fall"); }
-    private void UpdateMoving() { animation.CrossFade("Moving"); }
 
 }
