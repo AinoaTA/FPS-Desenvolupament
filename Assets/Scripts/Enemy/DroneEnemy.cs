@@ -104,37 +104,12 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateChaseState()
     {
-
-        //float l_Near = m_MinDistanceToAttack - m_DistancePlayer;
-
-        //if (l_Near >= m_MinDistanceToChase && m_DistancePlayer < m_MaxDistanceToChase)
-        //{
-        //    SetNextChasePosition();
-
-
-        //}
-        //else if (m_DistancePlayer >= m_MaxDistanceToChase)
-        //    SetAlertState();
-        //float LessDistance = m_DistancePlayer - m_MaxDistanceToChase;
-        //float currentDistance;
-
         SetNextChasePosition();
-        if (m_DistancePlayer >= m_MinDistanceToChase && m_DistancePlayer < m_MaxDistanceToChase)
-        {
-            
-            //currentDistance = m_DistancePlayer - m_MaxDistanceToChase;
-            //if (currentDistance<=LessDistance)
-            //{
-            //    print("atack)");
-            //    SetAttackState();
-            //}    
-            //print(m_NavMeshAgent.destination== m_NavMeshAgent.destination);
-            //if (m_NavMeshAgent.destination == m_NavMeshAgent.destination)
+        Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+        if (m_DistancePlayer < Vector3.Distance(transform.position, l_Player *m_MinDistanceToAttack))
             SetAttackState();
-        }
         else if (m_DistancePlayer >= m_MaxDistanceToChase)
             SetAlertState();
-
     }
 
     void SetAlertState()
@@ -161,6 +136,7 @@ public class DroneEnemy : MonoBehaviour
     void SetPatrolState()
     {
         m_State = IState.PATROL;
+        m_CurrentWaypointId=NearestWayPoint();
         MoveToNextPatrolPosition();
     }
 
@@ -203,10 +179,10 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateHitState()
     {
-        if (m_LastState != IState.IDLE || m_LastState != IState.PATROL)
-            m_State = m_LastState;
-        else
+        if (m_LastState == IState.IDLE || m_LastState == IState.PATROL)
             SetAlertState();
+        else 
+            m_State = m_LastState;
     }
 
     void SetDieState()
@@ -232,6 +208,7 @@ public class DroneEnemy : MonoBehaviour
 
     void MoveToNextPatrolPosition()
     {
+        
         m_NavMeshAgent.destination = m_PatrolWayPoints[m_CurrentWaypointId].position;
         m_NavMeshAgent.isStopped = false;
         ++m_CurrentWaypointId;
@@ -261,6 +238,20 @@ public class DroneEnemy : MonoBehaviour
         return false;
     }
 
+    private int NearestWayPoint()
+    {
+        float l_NearPos = Vector3.Distance(transform.position, m_PatrolWayPoints[0].position);
+        int index=0;
+        for (int i = 0; i < m_PatrolWayPoints.Count; i++)
+        {
+            if(Vector3.Distance(transform.position, m_PatrolWayPoints[i].position)< l_NearPos)
+            {
+                l_NearPos = Vector3.Distance(transform.position, m_PatrolWayPoints[i].position);
+                index = i;
+            }
+        }
+        return index;
+    }
     public void Hit()
     {
         if (m_HealthSystem.m_Life > 0)

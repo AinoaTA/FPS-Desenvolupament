@@ -77,24 +77,26 @@ public class Shoot : MonoBehaviour
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
             print(l_RaycastHit.collider.name);
-            //CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
             if (l_RaycastHit.collider.CompareTag("Enemy"))
-            {
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
-            }else if(l_RaycastHit.collider.CompareTag("Gallery"))
+
+            else if(l_RaycastHit.collider.CompareTag("Gallery"))
             {
                 GalleryAnimation temp = l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>();
                 temp.SetShot();
 
                 ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
-                   
+            
+            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal,l_RaycastHit.transform);
+
             UpdateBullets();
 
             RecoilEffect();
             StartCoroutine(ShootingDelay());
         }
-        else { playerState.UpdateShoot(PlayerState.PlayerMode.Idle); }
+        else
+            playerState.UpdateShoot(PlayerState.PlayerMode.Idle);
     }
 
     private void RecoilEffect()
@@ -111,10 +113,11 @@ public class Shoot : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         Player.Recoil = 0;
     }
-    private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal)
+    private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal, Transform parent)
     {
         GameObject bullet = Instantiate(BulletPrefab, HitPos, Quaternion.identity);
         bullet.transform.rotation = Quaternion.LookRotation(Normal);
+        bullet.transform.parent = parent;
 
        // Bullet b = new Bullet(transform, Normal, 10f);
     }
