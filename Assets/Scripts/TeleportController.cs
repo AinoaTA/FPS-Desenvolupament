@@ -6,7 +6,6 @@ public class TeleportController : MonoBehaviour
 {
     public List<Teleport> m_Activated;
     static TeleportController m_TeleportController;
-
     private void Start()
     {
         m_TeleportController = this;
@@ -19,5 +18,12 @@ public class TeleportController : MonoBehaviour
     public Vector3 SpawnToLastTeleport()
     {
         return m_Activated[m_Activated.Count-1].m_ToSpawn.position;
+    }
+
+    public void ButtonLastCheckPoint()
+    {
+        GameController.GetGameController().GetPlayer().transform.position = SpawnToLastTeleport();
+        HudController.GetHudController().DesactiveGameOver();
+
     }
 }
