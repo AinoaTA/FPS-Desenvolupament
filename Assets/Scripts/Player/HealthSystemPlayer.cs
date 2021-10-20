@@ -91,5 +91,13 @@ public class HealthSystemPlayer : MonoBehaviour
         m_ShieldLifeTime = m_MaxShieldLifeTime;
         currentLife = maxLife;
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            GameController.GetGameController().GetPlayer().transform.position = TeleportController.GetTeleportController().SpawnToLastTeleport();
+        }
+    }
 }
 

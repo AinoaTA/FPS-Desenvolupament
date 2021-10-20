@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
-    public Vector3 m_ToSpawn;
+    public Transform m_ToSpawn;
     public bool CheckPoint;
     public Material m_On;
-    public GameObject m_Teleport;
+    public GameObject m_TeleportRenderer;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !CheckPoint )
         {
             CheckPoint = true;
-            m_Teleport.GetComponent<MeshRenderer>().material = m_On;
+            m_TeleportRenderer.GetComponent<MeshRenderer>().material = m_On;
             TeleportController.GetTeleportController().m_Activated.Add(this);//.gameObject.GetComponent<Teleport>());
         }      
     }
+
+  
 }
