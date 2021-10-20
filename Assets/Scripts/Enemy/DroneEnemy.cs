@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DroneEnemy : MonoBehaviour
 {
-    
+    private Animator m_Anim;
     public enum IState
     {
         IDLE=0,
@@ -45,6 +45,7 @@ public class DroneEnemy : MonoBehaviour
     {
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_HealthSystem = GetComponent<HealthSystemEnemy>();
+        m_Anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -192,7 +193,7 @@ public class DroneEnemy : MonoBehaviour
 
     void UpdateDieState()
     {
-        //fade
+        m_Anim.SetBool("Dead", true);
 
     }
 

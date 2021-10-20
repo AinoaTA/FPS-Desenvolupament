@@ -20,7 +20,6 @@ public class HealthSystemEnemy : MonoBehaviour
         if(m_Life <= 0)
         {
            // m_Drop.DropItem();
-            this.gameObject.SetActive(false);
         }
     }
 }
