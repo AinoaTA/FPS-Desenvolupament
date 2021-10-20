@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
-    public GameObject PrefabToDrop;
+    public List<GameObject> m_Drops;
     private int nDrop;
+    private int nNumber;
     
     public void DropItem()
     {
         if (RandomDrop())
         {
-            GameObject dropInstance = Instantiate(PrefabToDrop, transform.position, Quaternion.identity);
+            GameObject dropInstance = Instantiate(m_Drops[nDrop], transform.position, Quaternion.identity);
             dropInstance.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Impulse);
         }
     }
 
     private bool RandomDrop()
     {
-        nDrop = Random.Range(0, 100);
-        if (nDrop <= 75)
+        nDrop = Random.Range(0, m_Drops.Count);
+        nNumber = Random.Range(0, 100);
+
+        if (nNumber <= 75)
             return true;
         else
             return false;

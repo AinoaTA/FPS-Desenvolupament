@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealthSystemPlayer : MonoBehaviour
 {
+    private int Hearts = 3; 
     public float maxLife = 100;
     public float m_MaxShieldLifeTime = 100;
     public float m_ShieldLifeTime = 100;
@@ -14,6 +15,16 @@ public class HealthSystemPlayer : MonoBehaviour
     public delegate void DelegateUIShield(float value);
     public event DelegateUIShield delegateUIShield;
 
+    public delegate void DelegateGameOver();
+    public static DelegateGameOver delegateGameOver;
+
+    public delegate void DelegatUIHearts(int value);
+    public static DelegatUIHearts delegatUIHearts;
+
+    private void Start()
+    {
+        delegatUIHearts?.Invoke(Hearts);
+    }
     public void AddLife(float value)
     {
         float total = value + currentLife;
@@ -57,10 +68,28 @@ public class HealthSystemPlayer : MonoBehaviour
         if (currentLife <= 0)
         {
             currentLife = 0;
+            Hearts -=1;
+
+            GameController.GetGameController().GetPlayer().transform.position = TeleportController.GetTeleportController().SpawnToLastTeleport();
+            delegatUIHearts?.Invoke(Hearts);
+            ResetStates();
             //die anim
         }
+
+        if(Hearts<=0)
+            delegateGameOver?.Invoke();
 
         delegateUIHealth?.Invoke(currentLife);
         delegateUIShield.Invoke(m_ShieldLifeTime);
     }
+
+    private void ResetStates()
+    {
+        
+        maxLife = 100;
+        m_MaxShieldLifeTime = 100;
+        m_ShieldLifeTime = m_MaxShieldLifeTime;
+        currentLife = maxLife;
+    }
 }
+

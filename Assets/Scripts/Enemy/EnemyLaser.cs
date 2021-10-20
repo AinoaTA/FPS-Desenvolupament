@@ -7,7 +7,7 @@ public class EnemyLaser : MonoBehaviour
     private Vector3 m_Destination;
     private Vector3 m_CurrentVelocity = Vector3.one;
     [SerializeField]private float m_Speed = 50;
-    private int m_Damage = 10;
+    [SerializeField]private int m_Damage = 30;
 
     private void Start()
     {

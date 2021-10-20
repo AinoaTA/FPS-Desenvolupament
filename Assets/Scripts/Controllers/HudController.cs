@@ -1,11 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HudController : MonoBehaviour
 {
-    public Animator GameOver;
+    private Animator m_GameOver;
 
+    private void OnEnable()
+    {
+        HealthSystemPlayer.delegateGameOver += GameOverAction;
+    }
+
+    private void OnDisable()
+    {
+        HealthSystemPlayer.delegateGameOver -= GameOverAction;
+    }
+
+    private void Awake()
+    {
+        m_GameOver = GetComponent<Animator>();
+    }
     private void Start()
     {
         LockCursor();
@@ -22,16 +34,9 @@ public class HudController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-            GameOverAction();
-        
-    }
     private void GameOverAction()
     {
-        GameOver.SetBool("GameOver", true);
+        m_GameOver.SetBool("GameOver", true);
         UnLockCursor();
     }
 }

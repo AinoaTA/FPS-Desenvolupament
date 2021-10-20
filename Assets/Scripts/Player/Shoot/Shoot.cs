@@ -5,6 +5,7 @@ public class Shoot : MonoBehaviour
 {
     public Gun CurrentGun;
     public FPS Player;
+    public ParticleSystem smoke;
 
     private int maxBulletSaved;
     private int CurrentBulletsSaved;
@@ -60,6 +61,7 @@ public class Shoot : MonoBehaviour
         CurrentBulletsSaved = CurrentGun.maxBulletSaved;
         maxBulletSaved = CurrentBulletsSaved;
 
+
         UpdateTextUI();
 
     }
@@ -76,19 +78,23 @@ public class Shoot : MonoBehaviour
         RaycastHit l_RaycastHit;
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
+            smoke.gameObject.SetActive(true);
+            smoke.Play();
+
             print(l_RaycastHit.collider.name);
+
             if (l_RaycastHit.collider.CompareTag("Enemy"))
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
 
-            else if(l_RaycastHit.collider.CompareTag("Gallery"))
+            else if (l_RaycastHit.collider.CompareTag("Gallery"))
             {
                 GalleryAnimation temp = l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>();
                 temp.SetShot();
 
                 ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
-            
-            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal,l_RaycastHit.transform);
+
+            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal, l_RaycastHit.transform);
 
             UpdateBullets();
 
@@ -119,7 +125,7 @@ public class Shoot : MonoBehaviour
         bullet.transform.rotation = Quaternion.LookRotation(Normal);
         bullet.transform.parent = parent;
 
-       // Bullet b = new Bullet(transform, Normal, 10f);
+        // Bullet b = new Bullet(transform, Normal, 10f);
     }
     private IEnumerator ShootingDelay()
     {
@@ -138,14 +144,14 @@ public class Shoot : MonoBehaviour
         if (CurrentBulletsSaved > 0)
         {
             //si sigue habiendo más balas q las que puede tener cargadas
-            if(CurrentBulletsSaved > bulletForCharger)
+            if (CurrentBulletsSaved > bulletForCharger)
             {
                 CurrentBulletsSaved -= (bulletForCharger - CurrentBullets);
                 CurrentBullets = bulletForCharger;
-            } 
+            }
             else if (CurrentBulletsSaved <= bulletForCharger)
             {
-                int total = bulletForCharger -CurrentBullets;
+                int total = bulletForCharger - CurrentBullets;
 
                 if (CurrentBulletsSaved > total)
                     CurrentBulletsSaved -= total;
@@ -158,7 +164,7 @@ public class Shoot : MonoBehaviour
                 CurrentBullets += total;
             }
             if (CurrentBulletsSaved < 0)
-                CurrentBulletsSaved = 0;            
+                CurrentBulletsSaved = 0;
         }
         UpdateTextUI();
         StartCoroutine(ChargingDelay());
@@ -178,7 +184,7 @@ public class Shoot : MonoBehaviour
     }
     private void UpdateTextUI()
     {
-        delegateUI?.Invoke(CurrentBullets,CurrentBulletsSaved,bulletForCharger);
+        delegateUI?.Invoke(CurrentBullets, CurrentBulletsSaved, bulletForCharger);
     }
 
     public void AddAmmo(int value)

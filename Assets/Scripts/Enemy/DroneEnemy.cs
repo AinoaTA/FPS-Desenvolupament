@@ -76,7 +76,7 @@ public class DroneEnemy : MonoBehaviour
                 UpdateHitState();
                 break;
             case IState.DIE:
-                UpdateDieState();
+                StartCoroutine(UpdateDieState());
                 break;
             default:
                 break;
@@ -191,10 +191,11 @@ public class DroneEnemy : MonoBehaviour
         m_State = IState.DIE;
     }
 
-    void UpdateDieState()
+    IEnumerator UpdateDieState()
     {
         m_Anim.SetBool("Dead", true);
-
+        yield return new WaitForSeconds(2.2f);
+        gameObject.SetActive(false);
     }
 
     void SetNextChasePosition()

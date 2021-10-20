@@ -19,7 +19,7 @@ public class HealthSystemEnemy : MonoBehaviour
         print("vida drone"+m_Life);
         if(m_Life <= 0)
         {
-           // m_Drop.DropItem();
+           m_Drop.DropItem();
         }
     }
 }
