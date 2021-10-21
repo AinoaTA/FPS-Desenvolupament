@@ -5,14 +5,11 @@ using UnityEngine;
 public class GalleryControl : MonoBehaviour
 {
     public GameObject[] m_Statues;
-
     private float timer = 25;
     public bool startGallery = false;
 
-
     public delegate void DelegateUITimer(float timer);
     public static DelegateUITimer delegateUITimer;
-
     private void OnEnable()
     {
         GalleryAnimation.startGallery += StartGallery;
@@ -28,35 +25,36 @@ public class GalleryControl : MonoBehaviour
     {
         startGallery = true;
     }
-
-   
-    private void ControlStatues()
-    {
-        
-    }
     private void Update()
     {
         if (startGallery)
         {
             timer -= Time.deltaTime;
-            delegateUITimer?.Invoke(timer);
-            if (timer>=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints >= ShooterPoints.GetShooterPoints().GetMaxPoints())
+
+            delegateUITimer?.Invoke(Mathf.Round(timer)); //sets ui text
+            if (timer>=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints >= ShooterPoints.GetShooterPoints().GetMaxPoints()) //reaches max points in time
             {
                 ShooterPoints.GetShooterPoints().SetCanOpenGate(true);
-                timer = 25;
-                startGallery = false;
+                StartCoroutine(RestartGallery());
+
             }
-            else if(timer<=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints < ShooterPoints.GetShooterPoints().GetMaxPoints())
+            else if(timer<=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints < ShooterPoints.GetShooterPoints().GetMaxPoints())//no reaches max points in time
             {
                 ShooterPoints.GetShooterPoints().SetCanOpenGate(false);
                 ShooterPoints.GetShooterPoints().ResetPoints();
-                timer = 25;
-                startGallery = false;
+
+                StartCoroutine(RestartGallery());
             }
         }
-        else
-        {
-            ControlStatues();
-        }
+
+
+        
+    }
+
+    private IEnumerator RestartGallery()
+    {
+        yield return new WaitForSeconds(2f);
+        timer = 25;
+        startGallery = false;
     }
 }

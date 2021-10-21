@@ -3,8 +3,18 @@ using UnityEngine;
 
 public class SceneController : MonoBehaviour
 {
-    public void RestartScene()
+
+    private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("GamePlay");
+
+        if (other.CompareTag("Player"))
+            LoadLevel2();
+
     }
+
+    void LoadLevel2()
+    {
+        SceneManager.LoadSceneAsync("Level2");
+    }
+
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HudController : MonoBehaviour
 {
-    public Animator m_GameOver;
+    public GameObject m_GameOver;
     static HudController m_HudController;
 
     private void OnEnable()
@@ -15,10 +15,6 @@ public class HudController : MonoBehaviour
         HealthSystemPlayer.delegateGameOver -= GameOverAction;
     }
 
-    private void Awake()
-    {
-        m_GameOver = GetComponent<Animator>();
-    }
     private void Start()
     {
         m_HudController = this;
@@ -37,15 +33,28 @@ public class HudController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-    private void GameOverAction()
+    public void GameOverAction()
     {
-        m_GameOver.SetBool("GameOver", true);
         UnLockCursor();
+
+        m_GameOver.GetComponent<Animator>().SetBool("GameOver", true);
+        m_GameOver.GetComponent<Animator>().SetBool("Idle", false);
     }
 
     public void DesactiveGameOver()
     {
-        m_GameOver.SetBool("GameOver", false);
         UnLockCursor();
+
+
+        m_GameOver.GetComponent<Animator>().SetBool("GameOver", false);
+        m_GameOver.GetComponent<Animator>().SetBool("Idle", true);
+        
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+            UnLockCursor();
+            
     }
 }

@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/The_Viking_Village.unity
+  - enabled: 0
+    path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Ainoa/GamePlaya/EscenarioInicial.unity
+    guid: c023050922a8acb43813da7e66901dc3
+  - enabled: 1
+    path: Assets/Scenes/Ainoa/GamePlaya/Level2.unity
+    guid: f3cbfaf5976bcb846a8547a14da8c1fd
   m_configObjects: {}

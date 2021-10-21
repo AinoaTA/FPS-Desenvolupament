@@ -6,9 +6,12 @@ public class UITime : MonoBehaviour
     private TMP_Text tmp;
     private float m_Timer;
 
+    private GalleryControl galleryControl;
+
     private void Awake()
     {
         tmp = GetComponent<TMP_Text>();
+        galleryControl = FindObjectOfType<GalleryControl>();
     }
     private void OnEnable()
     {
@@ -27,9 +30,9 @@ public class UITime : MonoBehaviour
 
     private void Update()
     {
-        if (m_Timer <= 0)
-            tmp.text = "";
-        else
+        if (galleryControl.startGallery)
             tmp.text = m_Timer.ToString();
+        else
+            tmp.text = "";
     }
 }

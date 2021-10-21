@@ -15,13 +15,9 @@ public class GameController : MonoBehaviour
         {
             m_GameController = this;
             GameObject.DontDestroyOnLoad(gameObject);
-
-
         }
         else
-            GameObject.Destroy(this.gameObject);
-
-                  
+            GameObject.Destroy(this.gameObject);         
     }
 
     public void ResetLevel()

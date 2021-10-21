@@ -9,8 +9,6 @@ public class GalleryAnimation : MonoBehaviour
     private float timer;
     private float timerRevive;
 
-    private GalleryControl GalleryControl;
-
     public delegate void DelegateStartGallery();
     public static DelegateStartGallery startGallery;
 
@@ -35,7 +33,6 @@ public class GalleryAnimation : MonoBehaviour
 
     private void Start()
     {
-        GalleryControl = FindObjectOfType<GalleryControl>();
         m_CurrentState = AnimationStates.Idle;
 
         if (m_DefaultState != m_CurrentState)
@@ -48,38 +45,37 @@ public class GalleryAnimation : MonoBehaviour
     }
     private void UpdateAnimation()
     {
-        if (GalleryControl.startGallery)
+
+        switch (m_CurrentState)
         {
-            switch (m_CurrentState)
-            {
-                case AnimationStates.Idle:
-                    UpdateIdle();
-                    break;
-                case AnimationStates.Shot:
-                    UpdateShot();
-                    break;
-                case AnimationStates.Fall:
-                    StartCoroutine(UpdateFall());
-                    break;
-                case AnimationStates.Up:
-                    StartCoroutine(UpdateRevive());
-                    break;
-                case AnimationStates.Moved:
-                    UpdateMoved();
-                    break;
-                default:
-                    break;
-            }
+            case AnimationStates.Idle:
+                UpdateIdle();
+                break;
+            case AnimationStates.Shot:
+                UpdateShot();
+                break;
+            case AnimationStates.Fall:
+                StartCoroutine(UpdateFall());
+                break;
+            case AnimationStates.Up:
+                StartCoroutine(UpdateRevive());
+                break;
+            case AnimationStates.Moved:
+                UpdateMoved();
+                break;
+            default:
+                break;
         }
-    } 
+
+    }
 
     //SETS
-    public void SetIdle() {m_CurrentState = AnimationStates.Idle; }
-    public void SetShot() 
+    public void SetIdle() { m_CurrentState = AnimationStates.Idle; }
+    public void SetShot()
     {
         startGallery?.Invoke();
-        m_CurrentState = AnimationStates.Shot; 
-       
+        m_CurrentState = AnimationStates.Shot;
+
     }
     public void SetFall() { m_CurrentState = AnimationStates.Fall; }
     public void SetRevive() { m_CurrentState = AnimationStates.Up; }
@@ -87,19 +83,19 @@ public class GalleryAnimation : MonoBehaviour
 
 
     //UPDATES
-    private void UpdateIdle() 
-    { 
+    private void UpdateIdle()
+    {
         anim.SetBool("Idle", true);
         if (m_DefaultState != AnimationStates.Idle)
             SetMoved();
-        
+
     }
     private void UpdateMoved()
     {
         anim.SetBool("Idle", false);
         anim.SetBool("Moved", true);
     }
-    private void UpdateShot() 
+    private void UpdateShot()
     {
         anim.SetBool("Idle", false);
         anim.SetBool("Shot", true);
@@ -114,7 +110,7 @@ public class GalleryAnimation : MonoBehaviour
             timer = 0f;
         }
     }
-    private IEnumerator UpdateFall() 
+    private IEnumerator UpdateFall()
     {
         print("Cayendo....");
         anim.SetBool("FallBool", true);
@@ -126,7 +122,7 @@ public class GalleryAnimation : MonoBehaviour
     private IEnumerator UpdateRevive()
     {
         timerRevive += Time.deltaTime;
-        
+
         if (timerRevive > 5)
         {
             anim.SetBool("UpBool", true);
