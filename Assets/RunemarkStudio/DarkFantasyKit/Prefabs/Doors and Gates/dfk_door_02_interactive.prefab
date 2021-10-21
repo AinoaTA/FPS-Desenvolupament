@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4726964590921716}
   - component: {fileID: 1481664904956608526}
-  - component: {fileID: 4487733072730911208}
   - component: {fileID: 1080630747320329682}
   m_Layer: 0
   m_Name: dfk_door_02_interactive
@@ -48,19 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6530e8e76f5c84e8348ab8fe896832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &4487733072730911208
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003421851940162}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.39, y: 1.6, z: 3.37}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!95 &1080630747320329682
 Animator:
   serializedVersion: 3

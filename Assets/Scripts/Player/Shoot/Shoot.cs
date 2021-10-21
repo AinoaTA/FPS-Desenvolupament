@@ -92,7 +92,7 @@ public class Shoot : MonoBehaviour
             {
                 GalleryAnimation temp = l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>();
                 temp.SetShot();
-
+                
                 ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
 

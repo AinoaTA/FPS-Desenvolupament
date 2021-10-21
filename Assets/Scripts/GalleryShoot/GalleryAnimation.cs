@@ -9,6 +9,11 @@ public class GalleryAnimation : MonoBehaviour
     private float timer;
     private float timerRevive;
 
+    private GalleryControl GalleryControl;
+
+    public delegate void DelegateStartGallery();
+    public static DelegateStartGallery startGallery;
+
     public int m_Points;
     public enum AnimationStates
     {
@@ -21,7 +26,7 @@ public class GalleryAnimation : MonoBehaviour
 
     //algunas se moverán y otras no.
     public AnimationStates m_DefaultState; //aquí setearemos cual de ellas
-    private AnimationStates m_CurrentState;
+    public AnimationStates m_CurrentState;
 
     private void Awake()
     {
@@ -30,6 +35,7 @@ public class GalleryAnimation : MonoBehaviour
 
     private void Start()
     {
+        GalleryControl = FindObjectOfType<GalleryControl>();
         m_CurrentState = AnimationStates.Idle;
 
         if (m_DefaultState != m_CurrentState)
@@ -42,25 +48,28 @@ public class GalleryAnimation : MonoBehaviour
     }
     private void UpdateAnimation()
     {
-        switch (m_CurrentState)
+        if (GalleryControl.startGallery)
         {
-            case AnimationStates.Idle:
-                UpdateIdle();
-                break;
-            case AnimationStates.Shot:
-                UpdateShot();
-                break;
-            case AnimationStates.Fall:
-                StartCoroutine(UpdateFall());
-                break;
-            case AnimationStates.Up:
-                StartCoroutine(UpdateRevive());
-                break;
-            case AnimationStates.Moved:
-                UpdateMoved();
-                break;
-            default:
-                break;
+            switch (m_CurrentState)
+            {
+                case AnimationStates.Idle:
+                    UpdateIdle();
+                    break;
+                case AnimationStates.Shot:
+                    UpdateShot();
+                    break;
+                case AnimationStates.Fall:
+                    StartCoroutine(UpdateFall());
+                    break;
+                case AnimationStates.Up:
+                    StartCoroutine(UpdateRevive());
+                    break;
+                case AnimationStates.Moved:
+                    UpdateMoved();
+                    break;
+                default:
+                    break;
+            }
         }
     } 
 
@@ -68,6 +77,7 @@ public class GalleryAnimation : MonoBehaviour
     public void SetIdle() {m_CurrentState = AnimationStates.Idle; }
     public void SetShot() 
     {
+        startGallery?.Invoke();
         m_CurrentState = AnimationStates.Shot; 
        
     }
