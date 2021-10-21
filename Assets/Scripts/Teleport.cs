@@ -17,6 +17,8 @@ public class Teleport : MonoBehaviour
         {
             CheckPoint = true;
 
+            TeleportController.GetTeleportController().m_ItemsUsed.Clear();
+            TeleportController.GetTeleportController().m_Enemies.Clear();
 
             m_ActiveParticles.gameObject.SetActive(true);
             m_ActiveParticles.Play();

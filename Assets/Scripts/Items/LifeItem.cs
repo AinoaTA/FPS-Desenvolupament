@@ -16,9 +16,15 @@ public class LifeItem : Items
 
     public override void Pick()
     {
+        TeleportController.GetTeleportController().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
         m_LifeCount = Random.Range(m_LifeMinCount, m_LifeMaxCount);
         gameObject.SetActive(false);
 
         GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().AddLife(m_LifeCount);
+    }
+
+    public override void ResetItem(GameObject item)
+    {
+        item.SetActive(true);
     }
 }

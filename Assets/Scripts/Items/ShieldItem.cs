@@ -15,9 +15,15 @@ public class ShieldItem : Items
 
     public override void Pick()
     {
+        TeleportController.GetTeleportController().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
         m_ShieldCount = Random.Range(m_ShieldMinCount, m_ShieldMaxCount);
         gameObject.SetActive(false);
 
         GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().AddShieldLife(m_ShieldCount);
+    }
+
+    public override void ResetItem(GameObject item)
+    {
+        item.SetActive(true);
     }
 }

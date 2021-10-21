@@ -6,6 +6,8 @@ public class TeleportController : MonoBehaviour
 {
     public List<Teleport> m_Activated;
     static TeleportController m_TeleportController;
+    public List<Items> m_ItemsUsed;
+    public List<DroneEnemy> m_Enemies;
     private void Start()
     {
         m_TeleportController = this;
@@ -17,6 +19,11 @@ public class TeleportController : MonoBehaviour
     }
     public Vector3 SpawnToLastTeleport()
     {
+        if(m_ItemsUsed.Count!=0)
+           TeleportResetItems();
+        if (m_Enemies.Count != 0)
+            TeleportResetEnemies();
+
         return m_Activated[m_Activated.Count-1].m_ToSpawn.position;
     }
 
@@ -25,5 +32,24 @@ public class TeleportController : MonoBehaviour
         GameController.GetGameController().GetPlayer().transform.position = SpawnToLastTeleport();
         HudController.GetHudController().DesactiveGameOver();
 
+    }
+
+    private void TeleportResetItems()
+    {
+        
+        for (int i = 0; i < m_ItemsUsed.Count; i++)
+        {
+            m_ItemsUsed[i].ResetItem(m_ItemsUsed[i].gameObject);
+        }
+        m_ItemsUsed.Clear();
+    }
+
+    private void TeleportResetEnemies()
+    {
+        for (int i = 0; i < m_Enemies.Count; i++)
+        {
+            m_Enemies[i].GetComponent<HealthSystemEnemy>().Reset();
+        }
+        m_Enemies.Clear();
     }
 }

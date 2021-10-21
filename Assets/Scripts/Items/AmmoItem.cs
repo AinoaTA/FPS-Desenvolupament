@@ -15,8 +15,14 @@ public class AmmoItem : Items
 
     public override void Pick()
     {
+        TeleportController.GetTeleportController().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
         nRandom = Random.Range(m_AmmoMinCount, m_AmmoMaxCount);
         gameObject.SetActive(false);
         GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AddAmmo(nRandom);
+    }
+
+    public override void ResetItem(GameObject item)
+    {
+        item.SetActive(true);
     }
 }

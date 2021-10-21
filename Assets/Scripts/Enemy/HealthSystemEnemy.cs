@@ -19,7 +19,14 @@ public class HealthSystemEnemy : MonoBehaviour
         print("vida drone"+m_Life);
         if(m_Life <= 0)
         {
+           TeleportController.GetTeleportController().m_Enemies.Add(gameObject.GetComponent<DroneEnemy>());
            m_Drop.DropItem();
         }
+    }
+
+    public void Reset()
+    {
+        m_Life = 100f;
+        gameObject.SetActive(true);
     }
 }
