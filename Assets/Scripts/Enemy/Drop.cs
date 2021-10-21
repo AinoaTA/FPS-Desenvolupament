@@ -7,12 +7,13 @@ public class Drop : MonoBehaviour
     public List<GameObject> m_Drops;
     private int nDrop;
     private int nNumber;
+    public GameObject Destroy;
     
     public void DropItem()
     {
         if (RandomDrop())
         {
-            GameObject dropInstance = Instantiate(m_Drops[nDrop], transform.position, Quaternion.identity);
+            GameObject dropInstance = Instantiate(m_Drops[nDrop], transform.position, Quaternion.identity, Destroy.transform);
             dropInstance.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Impulse);
         }
     }

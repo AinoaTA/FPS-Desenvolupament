@@ -24,6 +24,8 @@ public class TeleportController : MonoBehaviour
         if (m_Enemies.Count != 0)
             TeleportResetEnemies();
 
+        GameController.GetGameController().ResetLevel();
+
         return m_Activated[m_Activated.Count-1].m_ToSpawn.position;
     }
 
@@ -48,7 +50,8 @@ public class TeleportController : MonoBehaviour
     {
         for (int i = 0; i < m_Enemies.Count; i++)
         {
-            m_Enemies[i].GetComponent<HealthSystemEnemy>().Reset();
+            m_Enemies[i].GetComponent<HealthSystemEnemy>().ResetEnemy();
+            m_Enemies[i].ResetStateEnemy();
         }
         m_Enemies.Clear();
     }

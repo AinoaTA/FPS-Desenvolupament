@@ -25,9 +25,8 @@ public class EnemyLaser : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameController.GetGameController().GetPlayer().GetComponent<HealthSystemPlayer>().GetDamage(m_Damage);
-            gameObject.SetActive(false);
+            
         }
-        else if (other.CompareTag("Default") || other.CompareTag("Ignore Raycast"));
-            gameObject.SetActive(false);   
+        gameObject.SetActive(false);
     }
 }

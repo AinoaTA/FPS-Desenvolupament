@@ -30,7 +30,6 @@ public class GalleryAnimation : MonoBehaviour
 
     private void Start()
     {
-        print(m_CurrentState + "def: " + m_DefaultState);
         m_CurrentState = AnimationStates.Idle;
 
         if (m_DefaultState != m_CurrentState)
@@ -63,7 +62,6 @@ public class GalleryAnimation : MonoBehaviour
             default:
                 break;
         }
-        //print(gameObject.name + " "+m_CurrentState);
     } 
 
     //SETS

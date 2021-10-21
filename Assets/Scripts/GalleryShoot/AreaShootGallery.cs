@@ -7,8 +7,14 @@ public class AreaShootGallery : MonoBehaviour
     public GameObject UIpointer;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
-        UIpointer.gameObject.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            print("aaaaaaaa");
+            UIpointer.gameObject.SetActive(true);
+        }
+        
+
+
     }
 
     private void OnTriggerExit(Collider other)

@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 4486744661632922}
   - component: {fileID: 33835063745474516}
   - component: {fileID: 23298409796856326}
-  - component: {fileID: 114891555884150556}
   m_Layer: 0
   m_Name: Door.Left.001
   m_TagString: Untagged
@@ -162,50 +161,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &114891555884150556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485268672482454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60fb5f0bcfe001e43bdb39e353a24158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActivateOnStart: 0
-  loopType: 0
-  Duration: 1
-  AccelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  Position: 0
-  PreviewPosition: 0
-  axis: {x: 0, y: 1, z: 0}
-  start: 0
-  end: -90
 --- !u!1 &1509387273107352
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +431,6 @@ GameObject:
   - component: {fileID: 4939422407163016}
   - component: {fileID: 33124389925241120}
   - component: {fileID: 23023631317128554}
-  - component: {fileID: 114294264258743340}
   m_Layer: 0
   m_Name: Door.Right.001
   m_TagString: Untagged
@@ -549,50 +503,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &114294264258743340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787772557516488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60fb5f0bcfe001e43bdb39e353a24158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActivateOnStart: 0
-  loopType: 0
-  Duration: 1
-  AccelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  Position: 0
-  PreviewPosition: 0
-  axis: {x: 0, y: 1, z: 0}
-  start: 0
-  end: 90
 --- !u!1 &1811469240200404
 GameObject:
   m_ObjectHideFlags: 0

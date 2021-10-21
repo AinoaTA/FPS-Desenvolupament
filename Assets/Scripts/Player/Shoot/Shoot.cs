@@ -6,6 +6,7 @@ public class Shoot : MonoBehaviour
     public Gun CurrentGun;
     public FPS Player;
     public ParticleSystem smoke;
+    public PoolElements AmmoPool;
 
     private int maxBulletSaved;
     private int CurrentBulletsSaved;
@@ -29,7 +30,7 @@ public class Shoot : MonoBehaviour
     public Camera PCamera;
     public GameObject BulletPrefab;
     public LayerMask m_ShootLayerMask;
-
+    public GameObject m_Destroy;
     //to call event delegate
     private PlayerState playerState;
 
@@ -52,6 +53,7 @@ public class Shoot : MonoBehaviour
     private void Awake()
     {
         playerState = FindObjectOfType<PlayerState>();
+        AmmoPool = new PoolElements(10, transform, BulletPrefab);
     }
     private void Start()
     {
@@ -121,8 +123,11 @@ public class Shoot : MonoBehaviour
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal, Transform parent)
     {
-        GameObject bullet = Instantiate(BulletPrefab, HitPos, Quaternion.identity);
+        //GameObject bullet = Instantiate(BulletPrefab, HitPos, Quaternion.identity);
+        GameObject bullet = AmmoPool.GetNextElement();
+        bullet.SetActive(true);
         bullet.transform.rotation = Quaternion.LookRotation(Normal);
+        bullet.transform.position = HitPos;
         bullet.transform.parent = parent;
 
         // Bullet b = new Bullet(transform, Normal, 10f);

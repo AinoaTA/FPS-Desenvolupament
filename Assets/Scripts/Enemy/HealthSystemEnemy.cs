@@ -24,9 +24,10 @@ public class HealthSystemEnemy : MonoBehaviour
         }
     }
 
-    public void Reset()
+    public void ResetEnemy()
     {
         m_Life = 100f;
         gameObject.SetActive(true);
     }
+
 }

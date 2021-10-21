@@ -9,16 +9,6 @@ public class UIHearts : MonoBehaviour
     {
         Hearts = GetComponent<TMP_Text>();
     }
-    private void OnEnable()
-    {
-        HealthSystemPlayer.delegatUIHearts += UpdateHeartsText;
-    }
-
-    private void OnDisable()
-    {
-        HealthSystemPlayer.delegatUIHearts -= UpdateHeartsText;
-    }
-
     private void UpdateHeartsText(int value)
     {
         if(value==1)

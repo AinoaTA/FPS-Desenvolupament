@@ -31,6 +31,9 @@ public class DroneEnemy : MonoBehaviour
     public LayerMask m_CollisionLayerMask;
     public List<Transform> m_PatrolWayPoints;
     public GameObject PrefabLaserBullet;
+    public LifeBarEnemy m_LifeBarEnemy;
+    public Transform m_UIAnchor;
+
     NavMeshAgent m_NavMeshAgent;
 
     private HealthSystemEnemy m_HealthSystem;
@@ -39,6 +42,7 @@ public class DroneEnemy : MonoBehaviour
     private float m_MaxTimer = 3f;
     private int m_CurrentWaypointId;
     private int m_RotationSpeed = 30;
+
     float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
 
     private void Awake()
@@ -81,8 +85,9 @@ public class DroneEnemy : MonoBehaviour
             default:
                 break;
         }
+        m_LifeBarEnemy.SetLifeBarEnemy(m_UIAnchor.position);
 
-        
+
     }
     void SetIdleState()
     {
@@ -264,5 +269,15 @@ public class DroneEnemy : MonoBehaviour
 
         else
             SetDieState();
+    }
+
+    public void ResetStateEnemy()
+    {
+        m_Anim.SetBool("Dead", false);
+        m_Anim.SetBool("Idle", true);
+
+        //transform.position = 
+        SetIdleState();
+
     }
 }
