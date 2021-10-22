@@ -9,7 +9,6 @@ public class AreaShootGallery : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("aaaaaaaa");
             UIpointer.gameObject.SetActive(true);
         }
         

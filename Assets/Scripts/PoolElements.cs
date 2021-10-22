@@ -13,12 +13,10 @@ public class PoolElements
         for (int i = 0; i < Count; i++)
         {
             m_CurrentElementID = 0;
-            GameObject l_Elemet = GameObject.Instantiate(Prefab);
+            GameObject l_Elemet = GameObject.Instantiate(Prefab,parent);
             l_Elemet.SetActive(false);
             m_Elements.Add(l_Elemet);
         }
-
-
     }
 
     public GameObject GetNextElement()
@@ -29,5 +27,4 @@ public class PoolElements
             m_CurrentElementID = 0;
         return l_Element;
     }
-
 }

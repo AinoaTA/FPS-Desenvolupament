@@ -12,12 +12,13 @@ public class DoorShoot : MonoBehaviour
     {
         ShooterPoints.delegateGate -= OpenGate;
     }
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
     }
     public void OpenGate()
     {
         animator.SetBool("Open", true);
+        MusicControllerFPS.GetMusicController().GateOpen();
     }
 }

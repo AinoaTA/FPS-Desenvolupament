@@ -7,6 +7,7 @@ public class Shoot : MonoBehaviour
     public FPS Player;
     public ParticleSystem smoke;
     public PoolElements AmmoPool;
+    public Transform PoolObjects;
 
     private int maxBulletSaved;
     private int CurrentBulletsSaved;
@@ -53,7 +54,7 @@ public class Shoot : MonoBehaviour
     private void Awake()
     {
         playerState = FindObjectOfType<PlayerState>();
-        AmmoPool = new PoolElements(10, transform, BulletPrefab);
+        AmmoPool = new PoolElements(10, PoolObjects, BulletPrefab);
     }
     private void Start()
     {
@@ -96,6 +97,7 @@ public class Shoot : MonoBehaviour
                 ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
 
+            MusicControllerFPS.GetMusicController().PlayerShoot();
             CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal, l_RaycastHit.transform);
 
             UpdateBullets();

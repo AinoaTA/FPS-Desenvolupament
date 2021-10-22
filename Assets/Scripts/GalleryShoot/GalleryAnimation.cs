@@ -104,7 +104,6 @@ public class GalleryAnimation : MonoBehaviour
 
         if (timer > 2)
         {
-            print("timer fall");
             anim.SetBool("Shot", false);
             SetFall();
             timer = 0f;
@@ -112,7 +111,6 @@ public class GalleryAnimation : MonoBehaviour
     }
     private IEnumerator UpdateFall()
     {
-        print("Cayendo....");
         anim.SetBool("FallBool", true);
         yield return new WaitForSeconds(2f);
         anim.SetBool("FallBool", false);
