@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class Gun : ScriptableObject
 {
-    public int maxBulletSaved = 100;
-    public int bulletForCharger = 50;
-    public int currentBullets = 50;
+    public int MaxBulletsHold;
+    public int CurrentBulletHold;
+    public int BulletForCharger;
+    public int CurrentBullets;
 
-    public float upDispersion = 0.5f;
+    public float upDispersion;
 
 }

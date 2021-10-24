@@ -4,6 +4,8 @@ public class HudController : MonoBehaviour
 {
     public GameObject m_GameOver;
     static HudController m_HudController;
+    public GameObject Pointer;
+    public GameObject Pause;
 
     private void OnEnable()
     {
@@ -36,25 +38,38 @@ public class HudController : MonoBehaviour
     public void GameOverAction()
     {
         UnLockCursor();
-
-        m_GameOver.GetComponent<Animator>().SetBool("GameOver", true);
-        m_GameOver.GetComponent<Animator>().SetBool("Idle", false);
+        m_GameOver.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void DesactiveGameOver()
     {
-        UnLockCursor();
+        LockCursor();
+        m_GameOver.SetActive(false);
+        Time.timeScale =1;
 
-
-        m_GameOver.GetComponent<Animator>().SetBool("GameOver", false);
-        m_GameOver.GetComponent<Animator>().SetBool("Idle", true);
-        
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (PlayerState.PlayerStateMode == PlayerState.PlayerMode.Charging)
+            Pointer.SetActive(false);
+        else
+            Pointer.SetActive(true);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause.SetActive(true);
             UnLockCursor();
+            Time.timeScale = 0f;
+        }
             
+    }
+
+    public void QuitPauseMenu()
+    {
+        LockCursor();
+        Pause.SetActive(false);
+        Time.timeScale = 1;
     }
 }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839514ebc4cf98c42a8b71ed7a305b8f, type: 3}
   m_Name: ShotGun
   m_EditorClassIdentifier: 
-  maxBulletSaved: 150
-  bulletForCharger: 50
-  currentBullets: 50
+  MaxBulletsHold: 75
+  CurrentBulletHold: 10
+  BulletForCharger: 25
+  CurrentBullets: 13
   upDispersion: 0.2

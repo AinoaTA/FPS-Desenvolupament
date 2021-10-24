@@ -8,14 +8,14 @@ public class AmmoItem : Items
 
     public override bool CanPick()
     {
-        if (GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetMaxBullets() != GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetCurrentBulletSaved())
+        if (GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetCurrentBulletHold() < GameController.GetGameController().GetPlayer().GetComponent<Shoot>().GetMaxBulletsHold())
             return true;
         return false;
     }
 
     public override void Pick()
     {
-        TeleportController.GetTeleportController().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
+        GameController.GetGameController().GetLevelData().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
         nRandom = Random.Range(m_AmmoMinCount, m_AmmoMaxCount);
         gameObject.SetActive(false);
         GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AddAmmo(nRandom);

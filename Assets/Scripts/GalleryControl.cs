@@ -45,14 +45,11 @@ public class GalleryControl : MonoBehaviour
             if (timer>=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints >= ShooterPoints.GetShooterPoints().GetMaxPoints()) //reaches max points in time
             {
                 ShooterPoints.GetShooterPoints().SetCanOpenGate(true);
-
                 StartCoroutine(RestartGallery());
             }
             else if(timer<=0 && ShooterPoints.GetShooterPoints().m_CurrentPoints < ShooterPoints.GetShooterPoints().GetMaxPoints())//no reaches max points in time
             {
                 ShooterPoints.GetShooterPoints().SetCanOpenGate(false);
-                ShooterPoints.GetShooterPoints().ResetPoints();
-
                 StartCoroutine(RestartGallery());
             }
         }
@@ -61,6 +58,7 @@ public class GalleryControl : MonoBehaviour
     private IEnumerator RestartGallery()
     {
         yield return new WaitForSeconds(2f);
+        ShooterPoints.GetShooterPoints().ResetPoints();
         timer = 25;
         startGallery = false;
     }

@@ -27,4 +27,12 @@ public class PoolElements
             m_CurrentElementID = 0;
         return l_Element;
     }
+
+    public void ResetElement()
+    {
+        for (int i = 0; i < m_Elements.Count; i++)
+        {
+            m_Elements[i].SetActive(false);
+        }
+    }
 }

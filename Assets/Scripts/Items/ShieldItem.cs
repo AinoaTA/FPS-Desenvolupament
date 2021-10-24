@@ -15,7 +15,7 @@ public class ShieldItem : Items
 
     public override void Pick()
     {
-        TeleportController.GetTeleportController().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
+        GameController.GetGameController().GetLevelData().m_ItemsUsed.Add(gameObject.GetComponent<Items>());
         m_ShieldCount = Random.Range(m_ShieldMinCount, m_ShieldMaxCount);
         gameObject.SetActive(false);
 

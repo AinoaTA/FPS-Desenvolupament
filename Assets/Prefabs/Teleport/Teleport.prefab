@@ -159,8 +159,13 @@ MonoBehaviour:
   m_ToSpawn: {fileID: 3995900346729725161}
   CheckPoint: 0
   m_On: {fileID: 2100000, guid: 29a232ef8835f044b97e62f192fccb87, type: 2}
+  m_Off: {fileID: 2100000, guid: bbe19d7b0ac3cf340a2dfefa39bb372a, type: 2}
   m_TeleportRenderer: {fileID: 3994814223103674850}
   m_ActiveParticles: {fileID: 3995900346885684893}
+  HealthSaved: 0
+  ShieldSaved: 0
+  CurrentBulletSaved: 0
+  CurrentBulletHold: 0
 --- !u!1 &3995900346729725162
 GameObject:
   m_ObjectHideFlags: 0

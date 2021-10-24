@@ -3,41 +3,44 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+    private int ResetCurrent;
+    private int ResetCurrentHold;
+
     public Gun CurrentGun;
+    public Gun CurrentValues;
     public FPS Player;
-    public ParticleSystem smoke;
+    public ParticleSystem Smoke;
     public PoolElements AmmoPool;
     public Transform PoolObjects;
 
-    private int maxBulletSaved;
-    private int CurrentBulletsSaved;
-    private int bulletForCharger;
-    private int CurrentBullets;
-    public int GetMaxBullets()
+    public int GetMaxBulletsHold()
     {
-        return maxBulletSaved;
+        return CurrentValues.MaxBulletsHold;
     }
     public int GetCurrentBullets()
     {
-        return CurrentBullets;
+        return CurrentValues.CurrentBullets;
     }
 
-    public int GetCurrentBulletSaved()
+    public int GetCurrentBulletHold()
     {
-        return CurrentBulletsSaved;
+        return CurrentValues.CurrentBulletHold;
     }
 
 
     public Camera PCamera;
     public GameObject BulletPrefab;
     public LayerMask m_ShootLayerMask;
-    public GameObject m_Destroy;
     //to call event delegate
     private PlayerState playerState;
 
-    public delegate void DelegateUI(int current, int max, int forCharger);//string text);
+    public delegate void DelegateUI(int current, int max, int forCharger);
     public static DelegateUI delegateUI;
-
+    private void Awake()
+    {
+        AmmoPool = new PoolElements(10, PoolObjects, BulletPrefab);
+        playerState = GetComponent<PlayerState>();
+    }
 
     private void OnEnable()
     {
@@ -51,21 +54,16 @@ public class Shoot : MonoBehaviour
         playerState.chargingDelegate -= Charging;
     }
 
-    private void Awake()
-    {
-        playerState = FindObjectOfType<PlayerState>();
-        AmmoPool = new PoolElements(10, PoolObjects, BulletPrefab);
-    }
     private void Start()
     {
+        CurrentValues.BulletForCharger = CurrentGun.BulletForCharger;
+        CurrentValues.CurrentBullets = CurrentGun.CurrentBullets;
+        CurrentValues.CurrentBulletHold = CurrentGun.CurrentBulletHold;
 
-        bulletForCharger = CurrentGun.bulletForCharger;
-        CurrentBullets = CurrentGun.currentBullets;
-        CurrentBulletsSaved = CurrentGun.maxBulletSaved;
-        maxBulletSaved = CurrentBulletsSaved;
+        ResetCurrent = CurrentValues.CurrentBullets;
+        ResetCurrentHold = CurrentValues.CurrentBulletHold;
 
-
-        UpdateTextUI();
+        UpdateTextUI(CurrentValues.CurrentBullets, CurrentValues.CurrentBulletHold, CurrentValues.BulletForCharger);
 
     }
     //**********************************************************
@@ -81,10 +79,8 @@ public class Shoot : MonoBehaviour
         RaycastHit l_RaycastHit;
         if (Physics.Raycast(l_ray, out l_RaycastHit, 200.0f, m_ShootLayerMask))
         {
-            smoke.gameObject.SetActive(true);
-            smoke.Play();
-
-            print(l_RaycastHit.collider.name);
+            Smoke.gameObject.SetActive(true);
+            Smoke.Play();
 
             if (l_RaycastHit.collider.CompareTag("Enemy"))
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
@@ -125,14 +121,12 @@ public class Shoot : MonoBehaviour
     }
     private void CreateShootHitParticles(Vector3 HitPos, Vector3 Normal, Transform parent)
     {
-        //GameObject bullet = Instantiate(BulletPrefab, HitPos, Quaternion.identity);
         GameObject bullet = AmmoPool.GetNextElement();
         bullet.SetActive(true);
         bullet.transform.rotation = Quaternion.LookRotation(Normal);
         bullet.transform.position = HitPos;
         bullet.transform.parent = parent;
 
-        // Bullet b = new Bullet(transform, Normal, 10f);
     }
     private IEnumerator ShootingDelay()
     {
@@ -148,32 +142,33 @@ public class Shoot : MonoBehaviour
     //**********************************************************
     public void Charging()
     {
-        if (CurrentBulletsSaved > 0)
+        if (CurrentValues.CurrentBulletHold > 0)
         {
             //si sigue habiendo más balas q las que puede tener cargadas
-            if (CurrentBulletsSaved > bulletForCharger)
+            if (CurrentValues.CurrentBulletHold > CurrentValues.BulletForCharger)
             {
-                CurrentBulletsSaved -= (bulletForCharger - CurrentBullets);
-                CurrentBullets = bulletForCharger;
+                CurrentValues.CurrentBulletHold -= (CurrentValues.BulletForCharger - CurrentValues.CurrentBullets);
+                CurrentValues.CurrentBullets = CurrentValues.BulletForCharger;
             }
-            else if (CurrentBulletsSaved <= bulletForCharger)
+            else if (CurrentValues.CurrentBulletHold <= CurrentValues.BulletForCharger)
             {
-                int total = bulletForCharger - CurrentBullets;
+                int total = CurrentValues.BulletForCharger - CurrentValues.CurrentBullets;
 
-                if (CurrentBulletsSaved > total)
-                    CurrentBulletsSaved -= total;
-                else if (CurrentBulletsSaved <= total)
+                if (CurrentValues.CurrentBulletHold > total)
+                    CurrentValues.CurrentBulletHold -= total;
+                else if (CurrentValues.CurrentBulletHold <= total)
                 {
                     int t = total;
-                    total = CurrentBulletsSaved;
-                    CurrentBulletsSaved -= t;
+                    total = CurrentValues.CurrentBulletHold;
+                    CurrentValues.CurrentBulletHold -= t;
                 }
-                CurrentBullets += total;
+                CurrentValues.CurrentBullets += total;
             }
-            if (CurrentBulletsSaved < 0)
-                CurrentBulletsSaved = 0;
+            if (CurrentValues.CurrentBulletHold < 0)
+                CurrentValues.CurrentBulletHold = 0;
         }
-        UpdateTextUI();
+        
+        UpdateTextUI(CurrentValues.CurrentBullets, CurrentValues.CurrentBulletHold, CurrentValues.BulletForCharger);
         StartCoroutine(ChargingDelay());
     }
     private IEnumerator ChargingDelay()
@@ -186,22 +181,32 @@ public class Shoot : MonoBehaviour
     //**********************************************************
     public void UpdateBullets()
     {
-        CurrentBullets -= 1;
-        UpdateTextUI();
+        CurrentValues.CurrentBullets -= 1;
+        
+        UpdateTextUI(CurrentValues.CurrentBullets, CurrentValues.CurrentBulletHold, CurrentValues.BulletForCharger);
     }
-    private void UpdateTextUI()
+    public void UpdateTextUI(int c, int m, int f)
     {
-        delegateUI?.Invoke(CurrentBullets, CurrentBulletsSaved, bulletForCharger);
+        delegateUI?.Invoke(c,m,f);
     }
-
     public void AddAmmo(int value)
     {
-        float total = value + CurrentBulletsSaved;
-        if (total > maxBulletSaved)
-            CurrentBulletsSaved += (maxBulletSaved - CurrentBulletsSaved);
-        else
-            CurrentBulletsSaved += value;
+        float total = value + CurrentValues.CurrentBulletHold;
 
-        UpdateTextUI();
+        if (total > CurrentValues.MaxBulletsHold)
+        {
+            CurrentValues.CurrentBulletHold += (CurrentValues.MaxBulletsHold - CurrentValues.CurrentBulletHold);
+        }
+        else
+            CurrentValues.CurrentBulletHold += value;
+
+        UpdateTextUI(CurrentValues.CurrentBullets, CurrentValues.CurrentBulletHold, CurrentValues.BulletForCharger);
+    }
+
+    public void ResetsShootStates()
+    {
+        CurrentValues.CurrentBullets =ResetCurrent;
+        CurrentValues.CurrentBulletHold=ResetCurrentHold;
+        UpdateTextUI(CurrentValues.CurrentBullets, CurrentValues.CurrentBulletHold, CurrentValues.BulletForCharger);
     }
 }

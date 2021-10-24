@@ -15,6 +15,8 @@ public class MusicControllerFPS : MonoBehaviour
 
     public AudioClip DroneClip;
 
+    bool GateSound => DoorShoot.GetGate().Open;
+
     private void Awake()
     {
         m_MusicController = this;
@@ -26,8 +28,14 @@ public class MusicControllerFPS : MonoBehaviour
 
     public void GateOpen()
     {
-        Gate.clip = DoorGateClip;
-        Gate.PlayOneShot(Gate.clip);
+        if (GateSound)
+        {
+            Gate.mute = false;
+            Gate.clip = DoorGateClip;
+            Gate.PlayOneShot(Gate.clip);
+        }
+        else
+            Gate.mute = true;
     }
 
     public void PlayerShoot()

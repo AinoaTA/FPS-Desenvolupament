@@ -24,7 +24,7 @@ public class GalleryAnimation : MonoBehaviour
 
     //algunas se moverán y otras no.
     public AnimationStates m_DefaultState; //aquí setearemos cual de ellas
-    public AnimationStates m_CurrentState;
+    private AnimationStates m_CurrentState;
 
     private void Awake()
     {

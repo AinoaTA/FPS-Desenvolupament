@@ -4,6 +4,7 @@ using UnityEngine;
 public class UICharger : MonoBehaviour
 {
     private TMP_Text tmp;
+    private int current, max;
 
     private void Awake()
     {
@@ -30,6 +31,8 @@ public class UICharger : MonoBehaviour
         else if (forCharger * 0.3 > current && current >= 0)
             tmp.color = Color.red;
 
+
+        
         tmp.text = current + "/" + max;
     }
 }

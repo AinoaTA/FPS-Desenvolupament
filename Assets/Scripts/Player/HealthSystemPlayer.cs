@@ -26,7 +26,6 @@ public class HealthSystemPlayer : MonoBehaviour
         }else
         currentLife += value;
 
-        delegateUIHealth?.Invoke(currentLife);
     }
     public void AddShieldLife(float value)
     {
@@ -39,7 +38,6 @@ public class HealthSystemPlayer : MonoBehaviour
         else
             m_ShieldLifeTime += value;
 
-        delegateUIShield.Invoke(m_ShieldLifeTime);
     }
 
     public void GetDamage(float value)
@@ -65,9 +63,7 @@ public class HealthSystemPlayer : MonoBehaviour
             //die anim
         }
 
-        
-        delegateUIHealth?.Invoke(currentLife);
-        delegateUIShield.Invoke(m_ShieldLifeTime);
+  
     }
 
     public void ResetStates()
@@ -77,8 +73,6 @@ public class HealthSystemPlayer : MonoBehaviour
         m_ShieldLifeTime = m_MaxShieldLifeTime;
         currentLife = maxLife;
 
-        delegateUIHealth?.Invoke(currentLife);
-        delegateUIShield.Invoke(m_ShieldLifeTime);
     }
 
     private void Update()
@@ -87,6 +81,10 @@ public class HealthSystemPlayer : MonoBehaviour
         {
             GameController.GetGameController().GetPlayer().transform.position = TeleportController.GetTeleportController().SpawnToLastTeleport();
         }
+
+        delegateUIHealth?.Invoke(currentLife);
+
+        delegateUIShield.Invoke(m_ShieldLifeTime);
     }
 }
 

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class TeleportController : MonoBehaviour
 {
-    public List<Teleport> m_Activated;
+    public Teleport m_Activated;
     static TeleportController m_TeleportController;
-    public List<Items> m_ItemsUsed;
-    public List<DroneEnemy> m_Enemies;
+    public List<Teleport> m_Teleports;
     private void Start()
     {
         m_TeleportController = this;
@@ -19,40 +18,26 @@ public class TeleportController : MonoBehaviour
     }
     public Vector3 SpawnToLastTeleport()
     {
-        if(m_ItemsUsed.Count!=0)
-           TeleportResetItems();
-        if (m_Enemies.Count != 0)
-            TeleportResetEnemies();
-
-        GameController.GetGameController().ResetLevel();
-
-        return m_Activated[m_Activated.Count-1].m_ToSpawn.position;
+        GameController.GetGameController().CheckPointPlayerStats(m_Activated.HealthSaved, m_Activated.ShieldSaved, m_Activated.CurrentBulletSaved, m_Activated.CurrentBulletHold);
+        GameController.GetGameController().GetLevelData().ResetTeleportObjects();
+        GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AmmoPool.ResetElement();
+        return m_Activated.m_ToSpawn.position;
     }
 
     public void ButtonLastCheckPoint()
     {
+        HudController.GetHudController().QuitPauseMenu();
+        GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AmmoPool.ResetElement();
         GameController.GetGameController().GetPlayer().transform.position = SpawnToLastTeleport();
         HudController.GetHudController().DesactiveGameOver();
-
     }
 
-    private void TeleportResetItems()
+    public void ResetTeleport()
     {
-        
-        for (int i = 0; i < m_ItemsUsed.Count; i++)
+        m_Activated = null;
+        for (int i = 0; i < m_Teleports.Count; i++)
         {
-            m_ItemsUsed[i].ResetItem(m_ItemsUsed[i].gameObject);
+            m_Teleports[i].ResetTeleport();
         }
-        m_ItemsUsed.Clear();
-    }
-
-    private void TeleportResetEnemies()
-    {
-        for (int i = 0; i < m_Enemies.Count; i++)
-        {
-            m_Enemies[i].GetComponent<HealthSystemEnemy>().ResetEnemy();
-            m_Enemies[i].ResetStateEnemy();
-        }
-        m_Enemies.Clear();
     }
 }

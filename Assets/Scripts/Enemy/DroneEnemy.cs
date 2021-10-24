@@ -6,6 +6,7 @@ using UnityEngine;
 public class DroneEnemy : MonoBehaviour
 {
     private Animator m_Anim;
+
     public enum IState
     {
         IDLE=0,
@@ -22,12 +23,12 @@ public class DroneEnemy : MonoBehaviour
 
     public float m_ConeAngle = 75f;
     public float m_DistanceToAlert = 5f;
-    public float m_MinDistanceToChase = 7f;
-    public float m_MaxDistanceToChase = 12f;
-    public float m_MinDistanceToAttack = 3f;
-    public float m_MaxDistanceToAttack = 5f;
-    public float m_MinDistanceToPatrol = 7f;
-    public float m_MaxDistanceToPatrol = 15f;
+    public float m_MinDistanceToChase = 3f;
+    public float m_MaxDistanceToChase = 5f;
+    public float m_MinDistanceToAttack = 2f;
+    public float m_MaxDistanceToAttack = 3f;
+    public float m_MinDistanceToPatrol = 6f;
+    public float m_MaxDistanceToPatrol = 10f;
     public LayerMask m_CollisionLayerMask;
     public List<Transform> m_PatrolWayPoints;
     public GameObject PrefabLaserBullet;
@@ -54,11 +55,11 @@ public class DroneEnemy : MonoBehaviour
 
     private void Start()
     {
+        transform.position = m_PatrolWayPoints[0].position;
         SetIdleState();
     }
     private void Update()
     {
-        print(m_State);
         switch (m_State)
         {
             case IState.IDLE:
@@ -85,9 +86,18 @@ public class DroneEnemy : MonoBehaviour
             default:
                 break;
         }
-        m_LifeBarEnemy.SetLifeBarEnemy(m_UIAnchor.position);
+        
+        
+        
 
+    }
 
+    private void LateUpdate()
+    {
+        if (m_DistancePlayer <= 10)
+            m_LifeBarEnemy.SetLifeBarEnemy(m_UIAnchor.position);
+        else
+            m_LifeBarEnemy.UnSetLifeBarEnemy();
     }
     void SetIdleState()
     {
@@ -112,7 +122,7 @@ public class DroneEnemy : MonoBehaviour
     {
         SetNextChasePosition();
         Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
-        if (m_DistancePlayer < Vector3.Distance(transform.position, l_Player *m_MinDistanceToAttack))
+        if (m_DistancePlayer < m_MaxDistanceToAttack)
             SetAttackState();
         else if (m_DistancePlayer >= m_MaxDistanceToChase)
             SetAlertState();
@@ -158,23 +168,22 @@ public class DroneEnemy : MonoBehaviour
     void SetAttackState()
     {
         m_State = IState.ATTACK;
-
     }
 
     void UpdateAttackState()
     {
-
         m_AttackTimer += Time.deltaTime;
-        transform.LookAt(GameController.GetGameController().GetPlayer().transform.position);
-        if (m_AttackTimer >= 1f)
+        Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+        transform.LookAt(l_Player);
+        if (m_AttackTimer >= 1f && m_DistancePlayer<m_MaxDistanceToAttack)
         {
-            Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position;
+            
 
-            GameObject l_Bullet = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity);
+            //GameObject l_Bullet = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity,transform);
+            EnemyBullet enemyBullet = new EnemyBullet();
+            enemyBullet.CreateABullet(PrefabLaserBullet, transform);
             m_AttackTimer = 0;
-        }
-
-        if(m_DistancePlayer> m_MinDistanceToChase)
+        }else if( m_DistancePlayer > m_MaxDistanceToAttack)
             SetChaseState();
     }
 
@@ -229,12 +238,12 @@ public class DroneEnemy : MonoBehaviour
         Vector3 l_Player = GameController.GetGameController().GetPlayer().transform.position+Vector3.up*1.6f;
         Vector3 l_EyesDronePos = transform.position + Vector3.up * 1.6f;
         Vector3 l_Direction = l_Player - l_EyesDronePos;
+        float l_DistanceToPlayer = l_Direction.magnitude;
+        l_Direction /= l_DistanceToPlayer;
+
         Vector3 l_Forward = transform.forward;
         l_Forward.y = 0f;
         l_Forward.Normalize();
-
-       
-        float l_DistanceToPlayer = l_Direction.magnitude;
         l_Direction.y = 0;
         l_Direction.Normalize();
 
@@ -280,8 +289,8 @@ public class DroneEnemy : MonoBehaviour
     {
         m_Anim.SetBool("Dead", false);
         m_Anim.SetBool("Idle", true);
-
-        //transform.position = 
+        m_HealthSystem.ResetEnemy();
+        transform.position = m_PatrolWayPoints[0].position;
         SetIdleState();
 
     }

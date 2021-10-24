@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
+    public Transform ResetPosition;
+
+
     private float m_Yaw;
     private float m_Pitch;
 
@@ -32,11 +35,10 @@ public class FPS : MonoBehaviour
     public KeyCode m_DebugLockKeyCode = KeyCode.O;
 
     public bool CanShootBool = true;
-    public GameController m_GameController;
 
     private float touchingGroundValue = 0.5f;
     private float m_VerticalSpeed = 0.0f;
-    private float touchingGround = 0.5f; //initial value
+    private float touchingGround = 0.3f; //initial value
     private bool m_OnGround = false;
 
     private PlayerState playerState;
@@ -67,7 +69,7 @@ public class FPS : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && !isChargerEmpty)
                 playerState.UpdateShoot(PlayerState.PlayerMode.Shooting);
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && shootGun.GetCurrentBulletHold()> 0  && shootGun.GetCurrentBullets()!=shootGun.CurrentValues.BulletForCharger)
                 playerState.UpdateShoot(PlayerState.PlayerMode.Charging);
         }
 
@@ -85,8 +87,6 @@ public class FPS : MonoBehaviour
         
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchControllerTransform.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
-
-        
     }
     private void PlayerMovement()
     {
@@ -146,5 +146,11 @@ public class FPS : MonoBehaviour
             if (l_Item.CanPick())
                 l_Item.Pick();
         }
+    }
+
+    public void ResetPlayerPos()
+    {
+        GameController.GetGameController().GetPlayer().transform.position = ResetPosition.position;
+        print("player; " + GameController.GetGameController().GetPlayer().transform.position+" " + "Reset " + ResetPosition.position);
     }
 }
