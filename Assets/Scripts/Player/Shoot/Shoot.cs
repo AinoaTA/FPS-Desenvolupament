@@ -12,6 +12,7 @@ public class Shoot : MonoBehaviour
     public ParticleSystem Smoke;
     public PoolElements AmmoPool;
     public Transform PoolObjects;
+    public int m_MaxDecans = 10;
 
     public int GetMaxBulletsHold()
     {
@@ -38,7 +39,7 @@ public class Shoot : MonoBehaviour
     public static DelegateUI delegateUI;
     private void Awake()
     {
-        AmmoPool = new PoolElements(10, PoolObjects, BulletPrefab);
+        AmmoPool = new PoolElements(m_MaxDecans, PoolObjects, BulletPrefab);
         playerState = GetComponent<PlayerState>();
     }
 

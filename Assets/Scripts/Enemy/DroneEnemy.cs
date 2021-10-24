@@ -287,11 +287,12 @@ public class DroneEnemy : MonoBehaviour
 
     public void ResetStateEnemy()
     {
+        this.m_State = IState.PATROL;
         m_Anim.SetBool("Dead", false);
         m_Anim.SetBool("Idle", true);
         m_HealthSystem.ResetEnemy();
-        transform.position = m_PatrolWayPoints[0].position;
-        SetIdleState();
+        m_NavMeshAgent.destination = m_PatrolWayPoints[0].position;
+        print("Reset");
 
     }
 }

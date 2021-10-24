@@ -18,17 +18,24 @@ public class TeleportController : MonoBehaviour
     }
     public Vector3 SpawnToLastTeleport()
     {
-        GameController.GetGameController().CheckPointPlayerStats(m_Activated.HealthSaved, m_Activated.ShieldSaved, m_Activated.CurrentBulletSaved, m_Activated.CurrentBulletHold);
-        GameController.GetGameController().GetLevelData().ResetTeleportObjects();
-        GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AmmoPool.ResetElement();
-        return m_Activated.m_ToSpawn.position;
+
+        //si no se ha pasado por encima de un checkpoint le llevará a la posición de inicio.
+        if (m_Activated != null)
+        {
+            GameController.GetGameController().CheckPointPlayerStats(m_Activated.HealthSaved, m_Activated.ShieldSaved, m_Activated.CurrentBulletSaved, m_Activated.CurrentBulletHold);
+            GameController.GetGameController().GetLevelData().ResetTeleportObjects();
+            GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AmmoPool.ResetElement();
+
+            return m_Activated.m_ToSpawn.position;
+        }
+        return GameController.GetGameController().GetPlayer().ResetPosition.position;
     }
 
     public void ButtonLastCheckPoint()
     {
-        HudController.GetHudController().QuitPauseMenu();
         GameController.GetGameController().GetPlayer().GetComponent<Shoot>().AmmoPool.ResetElement();
         GameController.GetGameController().GetPlayer().transform.position = SpawnToLastTeleport();
+        HudController.GetHudController().QuitPauseMenu();
         HudController.GetHudController().DesactiveGameOver();
     }
 

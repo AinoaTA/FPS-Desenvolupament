@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8322320183398527048}
   m_Layer: 2
   m_Name: Deca
-  m_TagString: Untagged
+  m_TagString: Deca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

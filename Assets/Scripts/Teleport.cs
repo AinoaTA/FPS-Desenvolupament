@@ -32,7 +32,7 @@ public class Teleport : MonoBehaviour
             ShieldSaved = l_PlayerSystem.m_ShieldLifeTime;
 
             GameController.GetGameController().GetLevelData().m_ItemsUsed.Clear();
-            GameController.GetGameController().GetLevelData().m_Enemies.Clear();
+            GameController.GetGameController().GetLevelData().m_EnemiesDeath.Clear();
 
             m_ActiveParticles.gameObject.SetActive(true);
             m_ActiveParticles.Play();

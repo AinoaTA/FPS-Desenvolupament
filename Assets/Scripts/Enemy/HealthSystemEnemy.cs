@@ -28,7 +28,7 @@ public class HealthSystemEnemy : MonoBehaviour
         m_HealthBar.value = m_Life;
         if (m_Life <= 0)
         {
-           GameController.GetGameController().GetLevelData().m_Enemies.Add(gameObject.GetComponent<DroneEnemy>());
+           GameController.GetGameController().GetLevelData().m_EnemiesDeath.Add(gameObject.GetComponent<DroneEnemy>());
            m_Drop.DropItem();
         }
     }

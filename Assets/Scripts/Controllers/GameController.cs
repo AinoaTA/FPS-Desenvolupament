@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     public Transform m_DestroyObjects;
     private DoorShoot Gate;
     static GameController m_GameController;
+
+    private DoorKey m_DoorKey;
     LevelData m_LevelData;
     FPS m_player;
 
@@ -24,6 +26,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Gate = FindObjectOfType<DoorShoot>();
+        m_DoorKey = FindObjectOfType<DoorKey>();
     }
     public void ResetLevel()
     {
@@ -35,13 +38,16 @@ public class GameController : MonoBehaviour
 
 
         m_LevelData.ResetLastCheckPoint();
-        ResetStats();
+        m_LevelData.ResetDecansLevel();
         TeleportController.GetTeleportController().ResetTeleport();
         HudController.GetHudController().QuitPauseMenu();
+        HudController.GetHudController().DesactiveGameOver();
+
+        ResetStats();
         if (Gate != null)
-            Gate.ResetGate()
-;
-       
+            Gate.ResetGate();
+        if (m_DoorKey != null)
+            m_DoorKey.ResetKeyDoor();
     }
 
     public void ResetStats()

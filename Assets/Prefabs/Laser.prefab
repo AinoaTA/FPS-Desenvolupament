@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 795454726841227425}
   - component: {fileID: 661059215771946894}
   - component: {fileID: 1326956601235096565}
+  - component: {fileID: -7268347379142665827}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -111,3 +112,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: bf9b73d6223c7c641a1b994d1207f7dc, type: 3}
+--- !u!114 &-7268347379142665827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4438628887450330668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a96572dcd00d14cb3800587a66e6a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
