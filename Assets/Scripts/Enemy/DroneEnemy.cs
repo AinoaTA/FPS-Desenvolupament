@@ -44,6 +44,9 @@ public class DroneEnemy : MonoBehaviour
     private int m_CurrentWaypointId;
     private int m_RotationSpeed = 30;
 
+
+    //private Drop m_Drop;
+
     float m_DistancePlayer => Vector3.Distance(transform.position, GameController.GetGameController().GetPlayer().transform.position);
 
     private void Awake()
@@ -51,6 +54,7 @@ public class DroneEnemy : MonoBehaviour
         m_NavMeshAgent = GetComponent<NavMeshAgent>();
         m_HealthSystem = GetComponent<HealthSystemEnemy>();
         m_Anim = GetComponent<Animator>();
+        //m_Drop = GetComponentInParent<Drop>();
     }
 
     private void Start()
@@ -86,10 +90,6 @@ public class DroneEnemy : MonoBehaviour
             default:
                 break;
         }
-        
-        
-        
-
     }
 
     private void LateUpdate()
@@ -177,9 +177,6 @@ public class DroneEnemy : MonoBehaviour
         transform.LookAt(l_Player);
         if (m_AttackTimer >= 1f && m_DistancePlayer<m_MaxDistanceToAttack)
         {
-            
-
-            //GameObject l_Bullet = Instantiate(PrefabLaserBullet, transform.position, Quaternion.identity,transform);
             EnemyBullet enemyBullet = new EnemyBullet();
             enemyBullet.CreateABullet(PrefabLaserBullet, transform);
             m_AttackTimer = 0;
@@ -200,15 +197,17 @@ public class DroneEnemy : MonoBehaviour
             m_State = m_LastState;
     }
 
-    void SetDieState()
+    IEnumerator SetDieState()
     {
+       // m_Drop.DropItem();
+        yield return new WaitForSeconds(0.5f);
         m_State = IState.DIE;
     }
 
     IEnumerator UpdateDieState()
     {
         m_Anim.SetBool("Dead", true);
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(2.5f);
         gameObject.SetActive(false);
     }
 
@@ -282,7 +281,8 @@ public class DroneEnemy : MonoBehaviour
         }
 
         else
-            SetDieState();
+            StartCoroutine(SetDieState());
+        
     }
 
     public void ResetStateEnemy()
@@ -292,7 +292,6 @@ public class DroneEnemy : MonoBehaviour
         m_Anim.SetBool("Idle", true);
         m_HealthSystem.ResetEnemy();
         m_NavMeshAgent.destination = m_PatrolWayPoints[0].position;
-        print("Reset");
 
     }
 }

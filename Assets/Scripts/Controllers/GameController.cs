@@ -2,16 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class 
+    GameController : MonoBehaviour
 {
     public Transform m_DestroyObjects;
     private DoorShoot Gate;
     static GameController m_GameController;
 
-    private DoorKey m_DoorKey;
     LevelData m_LevelData;
     FPS m_player;
 
+    void OnEnable()
+    {
+        FindGCButton.delegateButton += ResetLevel;
+    }
+
+    void OnDisable()
+    {
+        FindGCButton.delegateButton -= ResetLevel;
+    }
     private void Awake()
     {
         if (m_GameController == null)
@@ -26,7 +35,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Gate = FindObjectOfType<DoorShoot>();
-        m_DoorKey = FindObjectOfType<DoorKey>();
     }
     public void ResetLevel()
     {
@@ -46,8 +54,8 @@ public class GameController : MonoBehaviour
         ResetStats();
         if (Gate != null)
             Gate.ResetGate();
-        if (m_DoorKey != null)
-            m_DoorKey.ResetKeyDoor();
+        if(m_LevelData.m_DoorKey !=null)
+           m_LevelData.m_DoorKey.ResetKeyDoor();
     }
 
     public void ResetStats()
@@ -83,7 +91,6 @@ public class GameController : MonoBehaviour
 
     public void CheckPointPlayerStats(float cLife, float cShield, int cBullet, int cBulletHold)
     {
-        print("CheckplayerStates");
         m_player.GetComponent<HealthSystemPlayer>().m_ShieldLifeTime = cShield;
         m_player.GetComponent<HealthSystemPlayer>().currentLife = cLife;
         m_player.GetComponent<Shoot>().UpdateTextUI(cBullet, cBulletHold, m_player.GetComponent<Shoot>().CurrentValues.BulletForCharger);

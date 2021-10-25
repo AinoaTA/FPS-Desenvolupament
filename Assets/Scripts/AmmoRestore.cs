@@ -21,16 +21,14 @@ public class AmmoRestore : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer>=10)
+            if (timer>=5)
             {
                 GameObject Ammo = AmmoPool.GetNextElement();
                 Ammo.SetActive(true);
                 Ammo.transform.position = transform.position;
                 
                 timer = 0;
-                print("ammo");
             }
-            print(timer);
         }
        
         

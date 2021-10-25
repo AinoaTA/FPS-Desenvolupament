@@ -10,6 +10,7 @@ public class Teleport : MonoBehaviour
     public Material m_Off;
     public GameObject m_TeleportRenderer;
     public ParticleSystem m_ActiveParticles;
+    public AudioSource m_AudioSource;
 
 
     public float HealthSaved;
@@ -38,6 +39,8 @@ public class Teleport : MonoBehaviour
             m_ActiveParticles.Play();
             m_TeleportRenderer.GetComponent<MeshRenderer>().material = m_On;
             TeleportController.GetTeleportController().m_Activated=this;
+
+            m_AudioSource.Play();
         }      
     }
 

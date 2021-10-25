@@ -3,15 +3,9 @@ using UnityEngine.UI;
 public class HealthSystemEnemy : MonoBehaviour
 {
     public float m_Life;
-    private Drop m_Drop;
 
     public Slider m_HealthBar;
     private float m_MaxLife = 100f;
-
-    private void Awake()
-    {
-        m_Drop = GetComponent<Drop>();
-    }
 
     private void Start()
     {
@@ -29,7 +23,6 @@ public class HealthSystemEnemy : MonoBehaviour
         if (m_Life <= 0)
         {
            GameController.GetGameController().GetLevelData().m_EnemiesDeath.Add(gameObject.GetComponent<DroneEnemy>());
-           m_Drop.DropItem();
         }
     }
 

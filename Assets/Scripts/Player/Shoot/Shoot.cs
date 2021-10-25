@@ -29,6 +29,8 @@ public class Shoot : MonoBehaviour
     }
 
 
+
+
     public Camera PCamera;
     public GameObject BulletPrefab;
     public LayerMask m_ShootLayerMask;
@@ -85,7 +87,6 @@ public class Shoot : MonoBehaviour
 
             if (l_RaycastHit.collider.CompareTag("Enemy"))
                 l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
-
             else if (l_RaycastHit.collider.CompareTag("Gallery"))
             {
                 GalleryAnimation temp = l_RaycastHit.collider.GetComponentInParent<GalleryAnimation>();
@@ -93,9 +94,11 @@ public class Shoot : MonoBehaviour
                 
                 ShooterPoints.GetShooterPoints().AddPoints(temp.m_Points);
             }
+            else
+                CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal, l_RaycastHit.transform);
 
             MusicControllerFPS.GetMusicController().PlayerShoot();
-            CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal, l_RaycastHit.transform);
+            
 
             UpdateBullets();
 

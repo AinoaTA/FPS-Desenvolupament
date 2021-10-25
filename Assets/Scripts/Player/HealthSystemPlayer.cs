@@ -58,9 +58,7 @@ public class HealthSystemPlayer : MonoBehaviour
             currentLife = 0;
 
             delegateGameOver?.Invoke();
-            //GameController.GetGameController().GetPlayer().transform.position = TeleportController.GetTeleportController().SpawnToLastTeleport();
-            //ResetStates();
-            //die anim
+
         }
 
   
@@ -77,11 +75,7 @@ public class HealthSystemPlayer : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            GameController.GetGameController().GetPlayer().transform.position = TeleportController.GetTeleportController().SpawnToLastTeleport();
-        }
-
+     
         delegateUIHealth?.Invoke(currentLife);
 
         delegateUIShield.Invoke(m_ShieldLifeTime);

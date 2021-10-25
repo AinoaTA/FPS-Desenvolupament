@@ -151,6 +151,6 @@ public class FPS : MonoBehaviour
     public void ResetPlayerPos()
     {
         GameController.GetGameController().GetPlayer().transform.position = ResetPosition.position;
-        print("player; " + GameController.GetGameController().GetPlayer().transform.position+" " + "Reset " + ResetPosition.position);
+        PlayerState.PlayerStateMode = PlayerState.PlayerMode.Idle;
     }
 }

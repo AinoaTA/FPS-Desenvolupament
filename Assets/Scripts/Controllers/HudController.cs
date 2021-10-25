@@ -69,8 +69,12 @@ public class HudController : MonoBehaviour
     public void QuitPauseMenu()
     {
         LockCursor();
-        print("a");
         Pause.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

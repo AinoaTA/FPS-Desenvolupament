@@ -8,7 +8,6 @@ public class ShooterPoints : MonoBehaviour
     static int m_MaxPoints = 15;
     static ShooterPoints shooterPoints;
     public bool CanOpenGate = false;
-    private bool m_Once = false;
 
     public delegate void DelegateGate();
     public static DelegateGate delegateGate;
@@ -34,6 +33,7 @@ public class ShooterPoints : MonoBehaviour
     {
         m_CurrentPoints = 0;
         delegateUIPoints?.Invoke(m_CurrentPoints, m_MaxPoints);
+        
     }
 
     public void AddPoints(int value)
@@ -44,10 +44,10 @@ public class ShooterPoints : MonoBehaviour
 
     private void Update()
     {
-        if (CanOpenGate && !m_Once) 
+        if (CanOpenGate)
         {
             delegateGate?.Invoke();
-            m_Once = true;
+            CanOpenGate = false;
         }
     }
 }

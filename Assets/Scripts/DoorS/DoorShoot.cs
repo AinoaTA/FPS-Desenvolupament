@@ -33,6 +33,5 @@ public class DoorShoot : MonoBehaviour
     {
         Open = false;
         animator.SetBool("Open", false);
-        animator.SetBool("Close", true);
     }
 }

@@ -11,16 +11,16 @@ public class LevelData: MonoBehaviour
     public List<Items> m_ItemsUsed;
     public List<DroneEnemy> m_EnemiesDeath;
 
+    public DoorKey m_DoorKey;
+
     public void ResetLastCheckPoint()
     {
         for (int i = 0; i < m_AllObjects.Count; i++)
-            if (m_AllObjects[i] == null)
                 m_AllObjects[i].gameObject.SetActive(true);
 
         for (int i = 0; i < m_AllEnemies.Count; i++)
         {
             m_AllEnemies[i].ResetStateEnemy();
-            print(i);
         }
             
 
